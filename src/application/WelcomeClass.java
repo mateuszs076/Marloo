@@ -60,7 +60,8 @@ public class WelcomeClass {
                             @Override
                             public void handle(ActionEvent arg0) {
                             	primaryStage.close();
-                            	MainMenu.menu();               		
+                            	root.getChildren().clear();
+                            	MainMenu.menu(primaryStage.getScene());               		
                             }
                         });
                     }
