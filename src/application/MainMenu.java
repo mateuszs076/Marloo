@@ -72,6 +72,11 @@ public class MainMenu {
 		    	enter.getStyleClass().add("button");
 		    }
 		});
+		enter.setOnMousePressed(new EventHandler<MouseEvent>() {
+		    public void handle(MouseEvent me) {
+			      LoginWindow.login(primaryStage, root);
+			    }
+		});
 		
 		Button about=new Button("About application");
 		about.resize(500, 100);

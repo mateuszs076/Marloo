@@ -42,6 +42,7 @@
 }
 .font
 {
+	-fx-text-fill: grey;
 	-fx-font-family: "Verdana";
 	-fx-font-size: 28px;
     -fx-font-weight: bold;
