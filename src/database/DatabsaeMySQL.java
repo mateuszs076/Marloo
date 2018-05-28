@@ -21,17 +21,17 @@ public class DatabsaeMySQL {
 		}
 	}
 	/**
-	 * Metoda s³u¿y do nawi¹zania po³¹czenia z baz¹ danych
+	 * Metoda sluzy do nawiazania polaczenia z baza danych
 	 * 
 	 * @param adress - adres bazy danych
 	 * @param dataBaseName - nazwa bazy
 	 * @param userName - login do bazy
-	 * @param password - has³o do bazy
-	 * @return - po³¹czenie z baz¹
+	 * @param password - haslo do bazy
+	 * @return - polaczenie z baza
 	 */
 	public static Connection connectToDatabase(String kindOfDatabase, String adress,
 			String dataBaseName, String userName, String password) {
-		System.out.print("\nLaczenie z baz¹ danych:");
+		System.out.print("\nLaczenie z baza danych:");
 		String baza = kindOfDatabase + adress + "/" + dataBaseName;
 		// objasnienie opisu bazy:
 		// jdbc: - mechanizm laczenia z baza (moze byc inny, np. odbc)
@@ -42,13 +42,13 @@ public class DatabsaeMySQL {
 		try {
 			connection = DriverManager.getConnection(baza, userName, password);
 		} catch (SQLException e) {
-			System.out.println("Blad przy po³¹czeniu z baz¹ danych!");
+			System.out.println("Blad przy polaczeniu z baza danych!");
 			System.exit(1);
 		}
 		return connection;
 	}
 	/**
-	 * Metoda s³u¿y do po³¹czenia z MySQL bez wybierania konkretnej bazy
+	 * Metoda sluzy do polaczenia z MySQL bez wybierania konkretnej bazy
 	 * @return referencja do uchwytu bazy danych
 	 */
 	public static Connection getConnection(String kindOfDatabase, String adres, int port, String userName, String password) {
@@ -61,50 +61,50 @@ public class DatabsaeMySQL {
 			conn = DriverManager.getConnection(kindOfDatabase + adres + ":" + port + "/",
 					connectionProps);
 		} catch (SQLException e) {
-			System.out.println("B³¹d po³¹czenia z baz¹ danych! " + e.getMessage() + ": " + e.getErrorCode());
+			System.out.println("Blad polaczenia z baza danych! " + e.getMessage() + ": " + e.getErrorCode());
 			System.exit(2);
 		}
-		System.out.println("Po³¹czenie z baz¹ danych: ... OK");
+		System.out.println("Polaczenie z baza danych: ... OK");
 		return conn;
 	}
 	
 	/**
-	 * tworzenie obiektu Statement przesy³aj¹cego zapytania do bazy connection
+	 * tworzenie obiektu Statement przesylajacego zapytania do bazy connection
 	 * 
-	 * @param connection - po³¹czenie z baz¹
-	 * @return obiekt Statement przesy³aj¹cy zapytania do bazy
+	 * @param connection - polaczenie z baza
+	 * @return obiekt Statement przesylajacy zapytania do bazy
 	 */
 	private static Statement createStatement(Connection connection) {
 		try {
 			return connection.createStatement();
 		} catch (SQLException e) {
-			System.out.println("B³¹d createStatement! " + e.getMessage() + ": " + e.getErrorCode());
+			System.out.println("Blad createStatement! " + e.getMessage() + ": " + e.getErrorCode());
 			System.exit(3);
 		}
 		return null;
 	}
 
 	/**
-	 * Zamykanie po³¹czenia z baz¹ danych
+	 * Zamykanie polaczenia z baza danych
 	 * 
-	 * @param connection - po³¹czenie z baz¹
-	 * @param s - obiekt przesy³aj¹cy zapytanie do bazy
+	 * @param connection - polaczenie z baza
+	 * @param s - obiekt przesylajacy zapytanie do bazy
 	 */
 	private static void closeConnection(Connection connection, Statement s) {
-		System.out.print("\nZamykanie polaczenia z baz¹:");
+		System.out.print("\nZamykanie polaczenia z baza:");
 		try {
 			s.close();
 			connection.close();
 		} catch (SQLException e) {
 			System.out
-					.println("Bl¹d przy zamykaniu pol¹czenia z baz¹! " + e.getMessage() + ": " + e.getErrorCode());;
+					.println("Blad przy zamykaniu polaczenia z baza! " + e.getMessage() + ": " + e.getErrorCode());;
 			System.exit(4);
 		}
-		System.out.print(" zamkniêcie OK");
+		System.out.print(" zamkniecie OK");
 	}
 
 	/**
-	 * Wykonanie kwerendy i przes³anie wyników do obiektu ResultSet
+	 * Wykonanie kwerendy i przeslanie wynikow do obiektu ResultSet
 	 * 
 	 * @param s - Statement
 	 * @param sql - zapytanie
@@ -128,7 +128,7 @@ public class DatabsaeMySQL {
 	}
 	
 	/**
-	 * Wyœwietla dane uzyskane zapytaniem select
+	 * Wyswietla dane uzyskane zapytaniem select
 	 * @param r - wynik zapytania
 	 */
 	private static void printDataFromQuery(ResultSet r) {
@@ -143,7 +143,7 @@ public class DatabsaeMySQL {
 			System.out
 					.print("\n____________________________________________________________________________\n");
 			/**
-			 * r.next() - przejœcie do kolejnego rekordu (wiersza) otrzymanych wyników
+			 * r.next() - przejecie do kolejnego rekordu (wiersza) otrzymanych wynikow
 			 */
 			// wyswietlanie kolejnych rekordow:
 			while (r.next()) {
@@ -157,7 +157,7 @@ public class DatabsaeMySQL {
 				System.out.println();
 			}
 		} catch (SQLException e) {
-			System.out.println("Bl¹d odczytu z bazy! " + e.getMessage() + ": " + e.getErrorCode());
+			System.out.println("Blad odczytu z bazy! " + e.getMessage() + ": " + e.getErrorCode());
 		}
 	}
 	/**
@@ -194,7 +194,7 @@ public class DatabsaeMySQL {
 				System.out.println();
 			}
 		} catch (SQLException e) {
-			System.out.println("Bl¹d odczytu z bazy! " + e.getMessage() + ": " + e.getErrorCode());
+			System.out.println("Blad odczytu z bazy! " + e.getMessage() + ": " + e.getErrorCode());
 		}
 	}
 
@@ -203,14 +203,14 @@ public class DatabsaeMySQL {
 			System.out.println(" ... OK");
 		else
 			System.exit(1);
-		// 2 sposób po³¹czenia
+		// 2 sposï¿½b poï¿½ï¿½czenia
 		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
 		Statement st = createStatement(con);
-		// próba wybrania bazy
+		// prï¿½ba wybrania bazy
 		if (executeUpdate(st, "USE nowaBaza;") == 0)
 			System.out.println("Baza wybrana");
 		else {
-			System.out.println("Baza nie istnieje! Tworzymy bazê: ");
+			System.out.println("Baza nie istnieje! Tworzymy baza: ");
 			if (executeUpdate(st, "create Database nowaBaza;") == 1)
 				System.out.println("Baza utworzona");
 			else

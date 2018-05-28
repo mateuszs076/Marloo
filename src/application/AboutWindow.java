@@ -13,10 +13,10 @@ public class AboutWindow {
 	{
 		root.getChildren().clear();
 		
-		Text des=new Text("Marloo - jest aplikacj¹ wykonan¹ przez dwójkê studentów trzeciego "
+		Text des=new Text("Marloo - jest aplikacja wykonana przez dwÃ³jkÄ™ studentÃ³w trzeciego "
 				+ "roku informatyki jako projekt realizowany w ramach przedmiotu: "
-				+ "Przetwarzanie Rozporoszone i Równoleg³e. Za³o¿eniem programu jest wspomaganie pracy magazynu i lini produkcyjnej."
-				+ " Autorami projektu s¹: Stanek Mateusz oraz Wierzbic Krystian.");
+				+ "Przetwarzanie Rozporoszone i RÃ³wnolegÅ‚e. ZaÅ‚oÅ¼eniem programu jest wspomaganie pracy magazynu i lini produkcyjnej."
+				+ " Autorami projektu sÄ…: Stanek Mateusz oraz Wierzbic Krystian.");
 		des.setTextAlignment(TextAlignment.JUSTIFY);
 		des.setLayoutX(200);
 		des.setLayoutY(100);
