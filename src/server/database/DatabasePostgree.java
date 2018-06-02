@@ -1,4 +1,4 @@
-package database;
+package server.database;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -43,7 +43,7 @@ public class DatabasePostgree {
         }
 
         if (connection != null) {
-            System.out.println("You made it, take control your database now!");
+            System.out.println("You made it, take control your server.database now!");
         } else {
             System.out.println("Failed to make connection!");
         }
