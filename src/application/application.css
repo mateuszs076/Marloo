@@ -23,6 +23,12 @@
     -fx-text-fill: #333333;
     -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
 }
+.menu
+{
+	-fx-background-color: greenyellow ;
+	-fx-font-color: white;
+	-fx-font-size: 15px;
+}
 .button-entered
 {
 	-fx-background-color: 

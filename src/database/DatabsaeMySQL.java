@@ -8,7 +8,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import users.User;
+
 public class DatabsaeMySQL {
+	static Connection con;
+	
+	public DatabsaeMySQL()
+	{
+		initDB();
+	}
+	
 	public static boolean checkDriver(String driver) {
 		// LADOWANIE STEROWNIKA
 		System.out.print("Sprawdzanie sterownika:");
@@ -20,6 +29,7 @@ public class DatabsaeMySQL {
 			return false;
 		}
 	}
+	
 	/**
 	 * Metoda sluzy do nawiazania polaczenia z baza danych
 	 * 
@@ -74,7 +84,7 @@ public class DatabsaeMySQL {
 	 * @param connection - polaczenie z baza
 	 * @return obiekt Statement przesylajacy zapytania do bazy
 	 */
-	private static Statement createStatement(Connection connection) {
+	static Statement createStatement(Connection connection) {
 		try {
 			return connection.createStatement();
 		} catch (SQLException e) {
@@ -198,15 +208,45 @@ public class DatabsaeMySQL {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void addUser(User u)
+	{
+		try {
+			Statement st = createStatement(con);
+			ResultSet r = executeQuery(st, "Select MAX(id) from uzytkownicy_;");
+			r.next();
+			int id = ((int)r.getObject(1)+1);
+			executeUpdate(st, "INSERT INTO users VALUES("+id+", '"+u.getLogin()+"', '"+u.getPassword()+"', '"+u.getName()+"', '"+u.getSurname()+","+u.getLevel()+");");
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public static int login(String login, String pass)
+	{
+		
+		
+		try {
+			Statement st = createStatement(con);
+			ResultSet r = executeQuery(st, "Select id,login,haslo,name,surname,level from users where login='"+login+"' and haslo='"+pass+"';");
+			r.next();
+			User u = new User(r.getInt(1), r.getString(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6));
+			st.close();
+			return u.getId();
+		} catch (SQLException e) {
+			System.out.println("====\nBlad logowania " + login + "\n" + e.getMessage() + ": " + e.getErrorCode() + "\n=====");
+			return -1;
+		}
+	}
+	public static void initDB() {
 		if (checkDriver("com.mysql.jdbc.Driver"))
 			System.out.println(" ... OK");
 		else
 			System.exit(1);
-		// 2 spos�b po��czenia
+		// 2 sposďż˝b poďż˝ďż˝czenia
 		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
 		Statement st = createStatement(con);
-		// pr�ba wybrania bazy
+		// prďż˝ba wybrania bazy
 		if (executeUpdate(st, "USE nowaBaza;") == 0)
 			System.out.println("Baza wybrana");
 		else {
@@ -229,7 +269,7 @@ public class DatabsaeMySQL {
 		executeUpdate(st, sql);
 		sql = "Select * from uzytkownicy_;";
 		printDataFromQuery(executeQuery(st, sql));
-		closeConnection(con, st);
+		//closeConnection(con, st);
 	
 	}
 

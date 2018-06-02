@@ -1,5 +1,6 @@
 package application;
 
+import database.DatabsaeMySQL;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -70,7 +71,7 @@ public class LoginWindow {
 		});
 		enter.setOnMousePressed(new EventHandler<MouseEvent>() {
 		    public void handle(MouseEvent me) {
-			      LoginWindow.login(primaryStage, root);
+		    	MainWindow.mainWindow(primaryStage, root);
 			    }
 		});
 		
