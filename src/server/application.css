@@ -1,7 +1,7 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 .root
 {
-	
+	-fx-background-color: linear-gradient(to bottom right, #3AB795, #CCD9EA);
 }
 .h
 {
@@ -22,12 +22,6 @@
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
     -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.2) , 1, 0.0 , 0 , 1);
-}
-.menu
-{
-	-fx-background-color: lightgray  ;
-	-fx-font-color: white;
-	-fx-font-size: 15px;
 }
 .button-entered
 {

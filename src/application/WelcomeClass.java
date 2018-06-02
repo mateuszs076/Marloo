@@ -14,24 +14,24 @@ public class WelcomeClass {
 	public static void goodMorning(Stage primaryStage) {
 		BorderPane root = new BorderPane();
 		
-		//ImageView logo=new ImageView(new Image("title.png"));
-		ImageView logo=new ImageView(new Image("logo.png"));
+		ImageView logo=new ImageView(new Image("title.png"));
+		//ImageView logo=new ImageView(new Image("logo.png"));
 		logo.setFitWidth(700);
 		logo.setFitHeight(130);
 		logo.setLayoutX(250);
 		logo.setLayoutY(235);
 		logo.setOpacity(0);
 		
-		//ImageView solutions=new ImageView(new Image("solutions.png"));
-		ImageView solutions=new ImageView(new Image("logo.png"));
+		ImageView solutions=new ImageView(new Image("solutions.png"));
+		//ImageView solutions=new ImageView(new Image("logo.png"));
 		solutions.setFitWidth(400);
 		solutions.setFitHeight(50);
 		solutions.setLayoutX(250);
 		solutions.setLayoutY(200);
 		solutions.setOpacity(0);
 		
-		//ImageView andyou=new ImageView(new Image("andyou.png"));
-		ImageView andyou=new ImageView(new Image("logo.png"));
+		ImageView andyou=new ImageView(new Image("andyou.png"));
+		//ImageView andyou=new ImageView(new Image("logo.png"));
 		andyou.setFitWidth(350);
 		andyou.setFitHeight(50);
 		andyou.setLayoutX(600);
