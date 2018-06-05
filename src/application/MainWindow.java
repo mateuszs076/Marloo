@@ -4,14 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -101,12 +104,29 @@ public class MainWindow {
 	
 	private static void dodajDoMag(Stage primaryStage)
 	{
+		Label header=new Label("DODAWANIE DO MAGAZYNU");
+		Label h1=new Label("WYBIERZ Z DOSTÊPNYCH");
+		ChoiceBox<String> index=new ChoiceBox<>();
+		Label h2=new Label("LUB PODAJ NOWE DANE");
+		Label inde=new Label("INDEX");
+		TextField ind=new TextField();
+		Label nazw=new Label("NAZWA");
+		TextField nazwa=new TextField();
+		Label j=new Label("JEDNOSTKA MIARY");
+		TextField jm=new TextField();
+		Label il=new Label("ILOŒÆ");
+		TextField ilosc=new TextField();
+		
+		Button potwierdz=new Button("Potwierdz");
+		
+		//Produkt p=new Produkt(ind.getText(), nazwa.getText(), jm.getText(), ilosc.getText());
+			
 		final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
-        VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(new Text("Dodawanie do Magazynu:"));
-        Scene dialogScene = new Scene(dialogVbox, 700, 700);
+        VBox dialogVbox = new VBox(10);
+        dialogVbox.getChildren().addAll(header, h1, index, h2, inde, ind, nazw, nazwa,j, jm,il, ilosc, potwierdz);
+        Scene dialogScene = new Scene(dialogVbox, 500, 500) ;
         dialog.setScene(dialogScene);
         dialog.show();
 	}
