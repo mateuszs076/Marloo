@@ -225,7 +225,7 @@ public class DatabsaeMySQL {
 	public static int login(String login, String pass)
 	{
 		
-		
+		System.out.println("Zalogowano");
 		try {
 			Statement st = createStatement(con);
 			ResultSet r = executeQuery(st, "Select id,login,haslo,name,surname,level from users where login='"+login+"' and haslo='"+pass+"';");

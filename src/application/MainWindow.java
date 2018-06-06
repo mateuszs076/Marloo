@@ -1,8 +1,15 @@
 package application;
 
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
+
+import Data.PopUps;
+import Data.Tabele;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -13,123 +20,16 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 public class MainWindow {
 	
-	private static TableView zawartosc()
-	{
-		TableView zawartosc = new TableView();
-		zawartosc.setEditable(true);
-		
-		TableColumn nazwa = new TableColumn("ZAWARTOŒÆ");
-        nazwa.setPrefWidth(1200); 
-        TableColumn index = new TableColumn("INDEX");
-        index.setPrefWidth(300);
-        TableColumn name = new TableColumn("Nazwa");
-        name.setPrefWidth(300);
-        TableColumn jm = new TableColumn("Jednostka miary");
-        jm.setPrefWidth(300);
-        TableColumn ilosc = new TableColumn("Iloœæ");
-        ilosc.setPrefWidth(300);
-        
-        nazwa.getColumns().addAll(index, name, jm, ilosc);
-        zawartosc.getColumns().addAll(nazwa);
-        return zawartosc;
-	}
-	
-	private static TableView pracownicy()
-	{
-		TableView pracownicy = new TableView();
-		pracownicy.setEditable(true);
-		
-		TableColumn nazwa = new TableColumn("PRACOWNICY");
-        nazwa.setPrefWidth(1200);  
-        TableColumn imie = new TableColumn("Imiê");
-        imie.setPrefWidth(300);
-        TableColumn nazwisko = new TableColumn("Nazwisko");
-        nazwisko.setPrefWidth(300);
-        TableColumn login = new TableColumn("Nazwa u¿ytkownika w systemie");
-        login.setPrefWidth(300);
-        TableColumn uprawnienia = new TableColumn("Uprawnienia");
-        uprawnienia.setPrefWidth(300);
-        
-        nazwa.getColumns().addAll(imie, nazwisko, login, uprawnienia);
-        pracownicy.getColumns().addAll(nazwa);
-        return pracownicy;
-	}
-	
-	private static TableView odbiorcy()
-	{
-		TableView odbiorcy = new TableView();
-		odbiorcy.setEditable(true);
-		
-		TableColumn nazwa = new TableColumn("ODBIORCY");
-        nazwa.setPrefWidth(1200);  
-        TableColumn imie = new TableColumn("Nazwa");
-        imie.setPrefWidth(300);
-        TableColumn nazwisko = new TableColumn("Kraj");
-        nazwisko.setPrefWidth(300);
-        TableColumn login = new TableColumn("Miasto");
-        login.setPrefWidth(300);
-        TableColumn uprawnienia = new TableColumn("Adres");
-        uprawnienia.setPrefWidth(300);
-        
-        nazwa.getColumns().addAll(imie, nazwisko, login, uprawnienia);
-        odbiorcy.getColumns().addAll(nazwa);
-        return odbiorcy;
-	}
-	
-	private static TableView maszyny()
-	{
-		TableView maszyny = new TableView();
-		maszyny.setEditable(true);
-		
-		TableColumn nazwa = new TableColumn("MASZYNY");
-        nazwa.setPrefWidth(1200);  
-        TableColumn imie = new TableColumn("Nazwa");
-        imie.setPrefWidth(400);
-        TableColumn nazwisko = new TableColumn("Czas procesu");
-        nazwisko.setPrefWidth(400);
-        TableColumn login = new TableColumn("Produkowane");
-        login.setPrefWidth(400);
-        
-        nazwa.getColumns().addAll(imie, nazwisko, login);
-        maszyny.getColumns().addAll(nazwa);
-        return maszyny;
-	}
-	
-	private static void dodajDoMag(Stage primaryStage)
-	{
-		Label header=new Label("DODAWANIE DO MAGAZYNU");
-		Label h1=new Label("WYBIERZ Z DOSTÊPNYCH");
-		ChoiceBox<String> index=new ChoiceBox<>();
-		Label h2=new Label("LUB PODAJ NOWE DANE");
-		Label inde=new Label("INDEX");
-		TextField ind=new TextField();
-		Label nazw=new Label("NAZWA");
-		TextField nazwa=new TextField();
-		Label j=new Label("JEDNOSTKA MIARY");
-		TextField jm=new TextField();
-		Label il=new Label("ILOŒÆ");
-		TextField ilosc=new TextField();
-		
-		Button potwierdz=new Button("Potwierdz");
-		
-		//Produkt p=new Produkt(ind.getText(), nazwa.getText(), jm.getText(), ilosc.getText());
-			
-		final Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(primaryStage);
-        VBox dialogVbox = new VBox(10);
-        dialogVbox.getChildren().addAll(header, h1, index, h2, inde, ind, nazw, nazwa,j, jm,il, ilosc, potwierdz);
-        Scene dialogScene = new Scene(dialogVbox, 500, 500) ;
-        dialog.setScene(dialogScene);
-        dialog.show();
-	}
 	
 	public static void mainWindow(Stage primaryStage, BorderPane root) {
 		root.getChildren().clear();
@@ -149,31 +49,35 @@ public class MainWindow {
         vbox.resize(1200, 600);
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(zawartosc());
+        vbox.getChildren().addAll(Tabele.zawartosc());
         
 		
 		MenuItem menuItem1 = new MenuItem("Przegl¹daj zawartoœæ");
 			menuItem1.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
-	            	vbox.getChildren().add(zawartosc());
+	            	vbox.getChildren().add(Tabele.zawartosc());
 	            }
 	        });
 		MenuItem menuItem2 = new MenuItem("Dodaj do magazynu");
 			menuItem2.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
-	            	dodajDoMag(primaryStage);
+	            	PopUps.dodajDoMag(primaryStage);
 	            }
 	        });
 		MenuItem menuItem3 = new MenuItem("Wydaj na produkcjê");
-		
+			menuItem3.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override public void handle(ActionEvent e) {
+	            	PopUps.wydajNaProdukcje(primaryStage);
+	            }
+	        });
 		MenuItem menuItem4 = new MenuItem("Przygotuj wysy³kê");
 		MenuItem menuItem5 = new MenuItem("Wyœlij przygotowan¹");
 		MenuItem menuItem6 = new MenuItem("Przegl¹daj Odbiorców");
 			menuItem6.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
-	            	vbox.getChildren().add(odbiorcy());
+	            	vbox.getChildren().add(Tabele.odbiorcy());
 	            }
 	        });
 		MenuItem menuItem7 = new MenuItem("Dodaj/Usuñ Odbiorców");
@@ -183,7 +87,7 @@ public class MainWindow {
 				menuItem16.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override public void handle(ActionEvent e) {
 		            	vbox.getChildren().clear();
-		            	vbox.getChildren().add(maszyny());
+		            	vbox.getChildren().add(Tabele.maszyny());
 		            }
 		        });
 			MenuItem menuItem17 = new MenuItem("Dodaj maszynê");		
@@ -203,7 +107,7 @@ public class MainWindow {
 			menuItem10.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
-	            	vbox.getChildren().add(pracownicy());
+	            	vbox.getChildren().add(Tabele.pracownicy());
 	            }
 	        });
 		MenuItem menuItem11 = new MenuItem("Wyœwietl Informcje");

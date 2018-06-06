@@ -71,6 +71,7 @@ public class LoginWindow {
 		});
 		enter.setOnMousePressed(new EventHandler<MouseEvent>() {
 		    public void handle(MouseEvent me) {
+		    	//DatabsaeMySQL.login(l.getText(), p.getText());
 		    	MainWindow.mainWindow(primaryStage, root);
 			    }
 		});
