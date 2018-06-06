@@ -157,5 +157,35 @@ public class PopUps {
         dialog.setScene(dialogScene);
         dialog.show();
 	}
+	public static void dodajMaszyne(Stage primaryStage)
+	{
+		Label header=new Label("Dodawanie Maszyny");
+		header.setAlignment(Pos.CENTER);
+		
+		TextField nazwa=new TextField();
+		nazwa.setPromptText("NAZWA MASZYNY");
+		nazwa.setAlignment(Pos.CENTER);
+		nazwa.setPrefWidth(200);
+		
+		Label jj2=new Label("CZAS PROCESU:");
+		jj2.setLayoutX(25);
+		
+		TextField ilosc=new TextField();		
+		ilosc.setTextFormatter(textFormatter);
+		ilosc.setPromptText("ILOŒÆ");
+		ilosc.setLayoutX(25);
+		
+		Button potwierdz=new Button("Dodaj");
+		potwierdz.setLayoutX(25);
+			
+		final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().addAll(header, nazwa, jj2, ilosc, potwierdz);
+        Scene dialogScene = new Scene(dialogVbox, 300, 200) ;
+        dialog.setScene(dialogScene);
+        dialog.show();
+	}
 }
 

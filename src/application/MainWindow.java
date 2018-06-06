@@ -90,7 +90,12 @@ public class MainWindow {
 		            	vbox.getChildren().add(Tabele.maszyny());
 		            }
 		        });
-			MenuItem menuItem17 = new MenuItem("Dodaj maszynê");		
+			MenuItem menuItem17 = new MenuItem("Dodaj maszynê");
+				menuItem17.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override public void handle(ActionEvent e) {
+		            	PopUps.dodajMaszyne(primaryStage);
+		            }
+		        });
 			MenuItem menuItem18 = new MenuItem("Edytuj parametry");
 			menuItem8.getItems().add(menuItem16);
 			menuItem8.getItems().add(menuItem17);
