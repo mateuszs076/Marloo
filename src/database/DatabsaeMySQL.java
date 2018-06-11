@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import users.User;
@@ -237,6 +238,24 @@ public class DatabsaeMySQL {
 			System.out.println("====\nBlad logowania " + login + "\n" + e.getMessage() + ": " + e.getErrorCode() + "\n=====");
 			return -1;
 		}
+	}
+	public static ArrayList<User> pobierzUserow() {
+		Statement st = createStatement(con);
+		ResultSet r = executeQuery(st, "SELECT * FROM uzytkownicy_;");
+		ArrayList<User> listeczka = new ArrayList<User>();
+		try {
+			while (r.next())
+				listeczka.add(new User(r.getInt("id"), r.getString("login"), r.getString("haslo"), r.getString("imie"),
+						r.getString("nazwisko"), r.getInt("uprawnienia")));
+			st.close();
+			System.out.println("Userzy pobrane");
+			return listeczka;
+
+		} catch (SQLException e) {
+			System.out.println("Nie mogłem pobrać userow, ponieważ:");
+			e.printStackTrace();
+		}
+		return listeczka;
 	}
 	public static void initDB() {
 		if (checkDriver("com.mysql.jdbc.Driver"))

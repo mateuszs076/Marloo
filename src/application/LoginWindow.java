@@ -1,6 +1,15 @@
 package application;
 
-import database.DatabsaeMySQL;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.ArrayList;
+
+import Data.User;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,7 +21,15 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+
 public class LoginWindow {
+	
+	static boolean sprawdzanie(String login, String haslo)
+	{
+		return false;
+		
+	}
+	
 	public static void login(Stage primaryStage, BorderPane root)
 	{
 		root.getChildren().clear();
@@ -72,7 +89,10 @@ public class LoginWindow {
 		enter.setOnMousePressed(new EventHandler<MouseEvent>() {
 		    public void handle(MouseEvent me) {
 		    	//DatabsaeMySQL.login(l.getText(), p.getText());
+		    	if(getUserzy(l.getText(), p.getText()))
 		    	MainWindow.mainWindow(primaryStage, root);
+		    	else
+		    	System.out.println("coœ posz³o nie tak");
 			    }
 		});
 		
@@ -134,5 +154,29 @@ public class LoginWindow {
 		
 		
 		
+	}
+	public static boolean getUserzy(String login, String haslo){
+		try {
+			int port = 1003;//port na sztywno			
+			Socket socket = new Socket("127.0.0.1", port);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));		
+			
+			//String str = "login";//warunek na serwerze ServerThred.30
+			String str = "login,"+login+","+haslo;
+			socket.setTcpNoDelay(true);
+			out.println(str);
+			out.flush();
+			InputStream inputStream = socket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+            //ArrayList<User> userzy = (ArrayList<User>) objInputStream.readObject();//znowu castowanko
+			System.out.println("Pobra³em pytanka");
+			socket.close();
+			return true;
+		} catch (Exception e) {
+			System.err.println(e);
+			return false;
+		}
 	}
 }
