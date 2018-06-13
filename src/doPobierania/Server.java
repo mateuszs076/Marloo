@@ -16,6 +16,7 @@ public class Server extends Thread {
 	 */
 	public Server(int port) {
 		super();
+		System.out.println("konsturuuje server dla"+ port);
 		this.port = port;
 	}
 
@@ -24,6 +25,7 @@ public class Server extends Thread {
 	 */
 	public void run() {
 		try {
+			System.out.println("Skonstruowalem dla"+ this.toString());
 			serverSocket = new ServerSocket(port);
 			while (!Thread.interrupted()) {// dopóki dzia³a
 				Socket socket = serverSocket.accept();

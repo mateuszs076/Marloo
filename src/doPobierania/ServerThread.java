@@ -30,7 +30,8 @@ public class ServerThread extends Thread {
 	public void run() {
 		try {
 			
-			
+
+			System.out.println("dzialam na potrzeby server thread dla "+this.getName().toString());
 			if (mySocket.getLocalPort() == 1003) {
 				BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
 				String str = in.readLine();

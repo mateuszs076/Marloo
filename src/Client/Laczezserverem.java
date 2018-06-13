@@ -9,7 +9,7 @@ public class Laczezserverem implements Runnable{
 	@Override
 	public void run() {
 		Socket socket=new Socket();
-		InetSocketAddress sa=new InetSocketAddress("127.0.0.1", 752);
+		InetSocketAddress sa=new InetSocketAddress("127.0.0.1", 1003);
 		try {
 			socket.connect(sa);
 		} catch (IOException e) {

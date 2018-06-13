@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Tabele {
+	
 	public static class Person {
 		private final SimpleStringProperty firstName;
 		private final SimpleStringProperty lastName;
@@ -270,7 +271,7 @@ public class Tabele {
 		ArrayList<User> userzy=new ArrayList<User>();
 		ArrayList<Person> people=new ArrayList<Person>();
 		
-		// userzy=getUserzy(); tutaj ma byæ dodawanie z bazy danych
+		//userzy=getUserzy(); //tutaj ma byæ dodawanie z bazy danych
 		
 		//next 10 lines to remove
 		User u1 = new User(1, "Adam11", "Kowalski", "Adam", "Kowalski", 0);

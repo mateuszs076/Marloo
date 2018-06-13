@@ -7,9 +7,11 @@ import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Data.User;
+import database.DatabsaeMySQL;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -89,10 +91,16 @@ public class LoginWindow {
 		enter.setOnMousePressed(new EventHandler<MouseEvent>() {
 		    public void handle(MouseEvent me) {
 		    	//DatabsaeMySQL.login(l.getText(), p.getText());
-		    	if(getUserzy(l.getText(), p.getText()))
-		    	MainWindow.mainWindow(primaryStage, root);
-		    	else
-		    	System.out.println("coœ posz³o nie tak");
+		    	//if(getUserzy(l.getText(), p.getText()))
+		    	try {
+					if(DatabsaeMySQL.login(l.getText(), p.getText())>=0)
+					MainWindow.mainWindow(primaryStage, root, DatabsaeMySQL.login(l.getText(), p.getText()));
+					else
+					System.out.println("coœ posz³o nie tak");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			    }
 		});
 		

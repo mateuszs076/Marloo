@@ -24,6 +24,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -31,7 +32,7 @@ import javafx.util.StringConverter;
 public class MainWindow {
 	
 	
-	public static void mainWindow(Stage primaryStage, BorderPane root) {
+	public static void mainWindow(Stage primaryStage, BorderPane root, int i) {
 		root.getChildren().clear();
 		
 		VBox vb=new VBox();
@@ -152,6 +153,7 @@ public class MainWindow {
 		menuBar.getMenus().addAll(menuFile, menuEdit, menuView, menuWork, menuUser, menuSet);
 		menuBar.resize(1250,0);
 		vb.getChildren().addAll(menuBar);
+		vb.getChildren().addAll(new Text("Zalogowano jako: "+ i));
 		root.getChildren().add(vb);
 		root.getChildren().add(vbox);
 	}

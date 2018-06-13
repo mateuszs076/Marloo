@@ -223,26 +223,31 @@ public class DatabsaeMySQL {
 			e.printStackTrace();
 		}
 	}
-	public static int login(String login, String pass)
+	public static int login(String login, String pass) throws SQLException
 	{
 		
-		System.out.println("Zalogowano");
-		try {
-			Statement st = createStatement(con);
-			ResultSet r = executeQuery(st, "Select id,login,haslo,name,surname,level from users where login='"+login+"' and haslo='"+pass+"';");
-			r.next();
-			User u = new User(r.getInt(1), r.getString(2), r.getString(3), r.getString(4), r.getString(5), r.getInt(6));
-			st.close();
-			return u.getId();
-		} catch (SQLException e) {
-			System.out.println("====\nBlad logowania " + login + "\n" + e.getMessage() + ": " + e.getErrorCode() + "\n=====");
-			return -1;
-		}
+		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
+		System.out.println("Zalogowano jak "+ login);
+		Statement st = con.createStatement();
+		if (executeUpdate(st, "USE nowaBaza;") == 0)
+			System.out.println("Baza wybrana");
+		User u=null;
+		ResultSet r = executeQuery(st, "Select id,login,haslo,imie,nazwisko,uprawnienia from uzytkownicy_ where login='"+login+"' and haslo='"+pass+"';");
+		 if(r.next())
+         {
+             u = new User(r.getInt("id"), r.getString("login"), r.getString("haslo"), r.getString("imie"), r.getString("nazwisko"), r.getInt("uprawnienia"));
+         }
+		st.close();
+		return u.getId();
 	}
 	public static ArrayList<User> pobierzUserow() {
+		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
 		Statement st = createStatement(con);
+		if (executeUpdate(st, "USE nowaBaza;") == 0)
+			System.out.println("Baza wybrana");
 		ResultSet r = executeQuery(st, "SELECT * FROM uzytkownicy_;");
 		ArrayList<User> listeczka = new ArrayList<User>();
+		System.out.println("Pobieram Userow");
 		try {
 			while (r.next())
 				listeczka.add(new User(r.getInt("id"), r.getString("login"), r.getString("haslo"), r.getString("imie"),

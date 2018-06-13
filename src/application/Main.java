@@ -1,5 +1,8 @@
 package application;
 	
+import java.io.IOException;
+
+import Client.Client;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -24,7 +27,8 @@ public class Main extends Application {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, InterruptedException {
+		Client.main(args);
 		launch(args);
 	}
 }
