@@ -1,11 +1,10 @@
 package Data;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -17,9 +16,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class Tabele {
+public class Tabele implements Serializable{
 	
-	public static class Person {
+	public static class Person implements Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6114401368785397315L;
 		private final SimpleStringProperty firstName;
 		private final SimpleStringProperty lastName;
 		private final SimpleStringProperty login;
@@ -268,13 +271,14 @@ public class Tabele {
 	}
 
 	public static TableView pracownicy() {
+		//getUserzy();
 		ArrayList<User> userzy=new ArrayList<User>();
 		ArrayList<Person> people=new ArrayList<Person>();
 		
-		//userzy=getUserzy(); //tutaj ma byæ dodawanie z bazy danych
+		userzy=getUserzy(); //tutaj ma byæ dodawanie z bazy danych
 		
 		//next 10 lines to remove
-		User u1 = new User(1, "Adam11", "Kowalski", "Adam", "Kowalski", 0);
+		/*User u1 = new User(1, "Adam11", "Kowalski", "Adam", "Kowalski", 0);
 		User u2 = new User(1, "Jan22", "Brzechwa", "Jan", "Brzechwa", 1);
 		User u3 = new User(1, "Adam33", "Banc", "Adam", "Banc", 2);
 		User u4 = new User(1, "Adam33", "Adam33", "AdaAdam33Adam33m", "Adam33sad", 3);
@@ -284,7 +288,7 @@ public class Tabele {
 		userzy.add(u3);
 		userzy.add(u4);
 		userzy.add(u5);
-		
+		*/
 		
 		for(int i=0; i<userzy.size(); i++)
 		{
@@ -400,7 +404,6 @@ public class Tabele {
 			int port = 1003;// port na sztywno
 			Socket socket = new Socket("127.0.0.1", port);
 			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 			String str = "userzy";// warunek na serwerze ServerThred.30
 
@@ -410,6 +413,7 @@ public class Tabele {
 			InputStream inputStream = socket.getInputStream();
 			ObjectInputStream objInputStream = null;
 			objInputStream = new ObjectInputStream(inputStream);
+			System.out.println("ArrayLista");
 			ArrayList<User> userzy = (ArrayList<User>) objInputStream.readObject();// znowu
 																					// castowanko
 			System.out.println("Pobra³em userów");

@@ -1,5 +1,6 @@
 package application;
 
+import java.io.Serializable;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
@@ -29,7 +30,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-public class MainWindow {
+public class MainWindow implements Serializable{
 	
 	
 	public static void mainWindow(Stage primaryStage, BorderPane root, int i) {

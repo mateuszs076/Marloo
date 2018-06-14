@@ -1,5 +1,7 @@
 package database;
 
+import java.io.Serializable;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,9 +11,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import users.User;
+import Data.User;
 
-public class DatabsaeMySQL {
+public class DatabsaeMySQL implements Serializable{
 	static Connection con;
 	
 	public DatabsaeMySQL()
@@ -209,7 +211,7 @@ public class DatabsaeMySQL {
 		}
 	}
 
-	public static void addUser(User u)
+	/*public static void addUser(User u)
 	{
 		try {
 			Statement st = createStatement(con);
@@ -222,7 +224,7 @@ public class DatabsaeMySQL {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 	public static int login(String login, String pass) throws SQLException
 	{
 		
@@ -242,25 +244,46 @@ public class DatabsaeMySQL {
 	}
 	public static ArrayList<User> pobierzUserow() {
 		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
-		Statement st = createStatement(con);
-		if (executeUpdate(st, "USE nowaBaza;") == 0)
-			System.out.println("Baza wybrana");
-		ResultSet r = executeQuery(st, "SELECT * FROM uzytkownicy_;");
-		ArrayList<User> listeczka = new ArrayList<User>();
 		System.out.println("Pobieram Userow");
+		
+		ArrayList<User> listeczka = new ArrayList<User>();
+		
 		try {
+			Statement st = createStatement(con);
+			if (executeUpdate(st, "USE nowaBaza;") == 0)
+				System.out.println("Baza wybrana");
+			ResultSet r = executeQuery(st, "SELECT * FROM uzytkownicy_;");
 			while (r.next())
 				listeczka.add(new User(r.getInt("id"), r.getString("login"), r.getString("haslo"), r.getString("imie"),
 						r.getString("nazwisko"), r.getInt("uprawnienia")));
 			st.close();
-			System.out.println("Userzy pobrane");
-			return listeczka;
+			System.out.println("Userzy pobrane "+listeczka.get(0).getImie());
+			
 
 		} catch (SQLException e) {
 			System.out.println("Nie mogłem pobrać userow, ponieważ:");
 			e.printStackTrace();
 		}
-		return listeczka;
+		finally
+		{
+			return listeczka;
+		}
+	}
+	public static int addUser(String login, String haslo, String imie, String nazwisko, int uprawnienia)
+	{
+		try {
+			Statement st = createStatement(con);
+			ResultSet r = executeQuery(st, "Select MAX(id) from uzytkownicy_;");
+			r.next();
+			int id = ((int)r.getObject(1)+1);
+			executeUpdate(st, "INSERT INTO users VALUES("+id+", '"+login+"', '"+haslo+"', '"+imie+"', '"+nazwisko+"', "+uprawnienia+");");
+			st.close();
+			return id;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	public static void initDB() {
 		if (checkDriver("com.mysql.jdbc.Driver"))

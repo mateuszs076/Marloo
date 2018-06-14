@@ -6,10 +6,11 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 
-import com.mysql.jdbc.authentication.MysqlClearPasswordPlugin;
-
+import Data.User;
 import database.DatabsaeMySQL;
 
 
@@ -20,7 +21,7 @@ public class ServerThread extends Thread {
 	 * Konstruktor klasy ServerThread
 	 * 
 	 * @param socket
-	 *            Obiekt typu socket wspomagaj¹cy zdefiniowanie portu
+	 *            Obiekt typu socket wspomagajÄ…cy zdefiniowanie portu
 	 */
 	public ServerThread(Socket socket) {
 		super();
@@ -45,21 +46,24 @@ public class ServerThread extends Thread {
 				}
 				if (data[0].equals("userzy")) {
 					System.out.println("Userzy");
-					System.out.println(DatabsaeMySQL.pobierzUserow());
 					objOutputStream.writeObject(DatabsaeMySQL.pobierzUserow());
 					objOutputStream.flush();			
 				}
-				System.out.println("Zakoñczono po³¹czenie z" + mySocket.getInetAddress());
-			} else if (mySocket.getLocalPort() == 1004) {
-				System.out.println("Zaraz nast¹pi aktualizaacja bazy danych");
+				System.out.println("ZakoÅ„czono poÅ‚Ä…czenie z" + mySocket.getInetAddress());
+			} else if(mySocket.getLocalPort() == 1004)
+			{
+				/*
+				mySocket.setTcpNoDelay(true);
+				System.out.println("Rozpoczynam tworzenie uÂ¿ytkownika");
 				InputStream inputStream = mySocket.getInputStream();
 				ObjectInputStream objInputStream = null;
 				objInputStream = new ObjectInputStream(inputStream);
-				/*Pytanie p = (Pytanie) objInputStream.readObject();// castowanko
-																	// na
-																	// Pytanko
-				JDBC.dodajPytanie(p);
-				System.out.println("Aktualizacja bazy danych zakoñczona");*/
+	            User p = (User) objInputStream.readObject();
+	            PrintWriter out = new PrintWriter(new OutputStreamWriter(mySocket.getOutputStream()));
+				String str = ""+JDBC.addUser(p.getLogin(), p.getName(), p.getEmail(), p.getPassword(), p.getSex(), p.getType());
+				out.println(str);
+				out.flush();
+				System.out.println("KoÃ±czÃª resjestracje");*/
 			}
 			mySocket.close();
 		} catch (Exception e) {
