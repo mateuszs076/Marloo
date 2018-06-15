@@ -1,5 +1,6 @@
 package doPobierania;
 
+import database.DatabasePostgree;
 import database.DatabsaeMySQL;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -59,6 +60,7 @@ public class ObslugaServera extends Application {
 				Platform.runLater(new Runnable() {
 					public void run() {
 						DatabsaeMySQL.initDB();
+						DatabasePostgree.maininit();
 					}
 				});
 				doPobierania.start();

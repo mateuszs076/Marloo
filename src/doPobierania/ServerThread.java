@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import Data.User;
+import database.DatabasePostgree;
 import database.DatabsaeMySQL;
 
 
@@ -47,6 +48,11 @@ public class ServerThread extends Thread {
 				if (data[0].equals("userzy")) {
 					System.out.println("Userzy");
 					objOutputStream.writeObject(DatabsaeMySQL.pobierzUserow());
+					objOutputStream.flush();			
+				}
+				if (data[0].equals("userzy")) {
+					System.out.println("produkty");
+					objOutputStream.writeObject(DatabasePostgree.readProdukty());
 					objOutputStream.flush();			
 				}
 				System.out.println("Zakończono połączenie z" + mySocket.getInetAddress());

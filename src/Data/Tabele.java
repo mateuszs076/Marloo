@@ -221,7 +221,7 @@ public class Tabele implements Serializable{
 		ArrayList<Produkt> produkty=new ArrayList<Produkt>();
 		ArrayList<Product> products=new ArrayList<Product>();
 		
-		// userzy=getUserzy(); tutaj ma byæ dodawanie z bazy danych
+		// produkty=getProdukty(); //tutaj ma byæ dodawanie z bazy danych
 		
 		//next 10 lines to remove
 		Produkt u1 = new Produkt("4COSTAM2COSTAM3", "Dzbanek na wodê", "szt", 1);
@@ -419,6 +419,31 @@ public class Tabele implements Serializable{
 			System.out.println("Pobra³em userów");
 			socket.close();
 			return userzy;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
+	}
+	public static ArrayList<Produkt> getProdukty() {
+		try {
+			int port = 1003;// port na sztywno
+			Socket socket = new Socket("127.0.0.1", port);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+			String str = "produkty";// warunek na serwerze ServerThred.30
+
+			socket.setTcpNoDelay(true);
+			out.println(str);
+			out.flush();
+			InputStream inputStream = socket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+			System.out.println("ArrayLista PRodukty");
+			ArrayList<Produkt> produkty = (ArrayList<Produkt>) objInputStream.readObject();// znowu
+																					// castowanko
+			System.out.println("Pobra³em produkty");
+			socket.close();
+			return produkty;
 		} catch (Exception e) {
 			System.err.println(e);
 			return null;
