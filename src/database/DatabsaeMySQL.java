@@ -28,7 +28,7 @@ public class DatabsaeMySQL implements Serializable{
 			Class.forName(driver).newInstance();
 			return true;
 		} catch (Exception e) {
-			System.out.println("Blad przy ladowaniu sterownika bazy!");
+			System.out.println("Blad przy  ladowaniu sterownika bazy!");
 			return false;
 		}
 	}
