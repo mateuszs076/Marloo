@@ -46,10 +46,10 @@ public class Tabele implements Serializable{
 				this.uprawnienia = new SimpleStringProperty("Starszy Pracownik Produkcji");
 				break;
 			case 4:
-				this.uprawnienia = new SimpleStringProperty("M³odszy Pracownik Produkcji");
+				this.uprawnienia = new SimpleStringProperty("MÅ‚odszy Pracownik Produkcji");
 				break;
 			case 5:
-				this.uprawnienia = new SimpleStringProperty("Sta¿ysta / Nowy Pracownik");
+				this.uprawnienia = new SimpleStringProperty("StaÅ¼ysta / Nowy Pracownik");
 				break;
 			default:
 				this.uprawnienia = new SimpleStringProperty("Niezidentyfikowano");
@@ -221,14 +221,14 @@ public class Tabele implements Serializable{
 		ArrayList<Produkt> produkty=new ArrayList<Produkt>();
 		ArrayList<Product> products=new ArrayList<Product>();
 		
-		// userzy=getUserzy(); tutaj ma byæ dodawanie z bazy danych
+		// userzy=getUserzy(); tutaj ma byÄ‡ dodawanie z bazy danych
 		
 		//next 10 lines to remove
-		Produkt u1 = new Produkt("4COSTAM2COSTAM3", "Dzbanek na wodê", "szt", 1);
-		Produkt u2 = new Produkt("4COSTAM2COSTAM3", "M¹ka", "kg", 1200);
-		Produkt u3 = new Produkt("4COSTAM2COSTAM3", "Taœma malarska du¿a", "m", 12.4);
+		Produkt u1 = new Produkt("4COSTAM2COSTAM3", "Dzbanek na wodÄ™", "szt", 1);
+		Produkt u2 = new Produkt("4COSTAM2COSTAM3", "MÄ…ka", "kg", 1200);
+		Produkt u3 = new Produkt("4COSTAM2COSTAM3", "TaÅ›ma malarska duÅ¼a", "m", 12.4);
 		Produkt u4 = new Produkt("4COSTAM2COSTAM3", "Parapet zielony", "szt", 1);
-		Produkt u5 = new Produkt("4COSTAM2COSTAM3", "Wungiel z œlunska", "kg", 11500.200);
+		Produkt u5 = new Produkt("4COSTAM2COSTAM3", "Wungiel z Å›lunska", "kg", 11500.200);
 		produkty.add(u1);
 		produkty.add(u2);
 		produkty.add(u3);
@@ -249,7 +249,7 @@ public class Tabele implements Serializable{
 		zawartosc.setEditable(true);
 		zawartosc.setItems(data);
 
-		TableColumn nazwa = new TableColumn("ZAWARTOŒÆ");
+		TableColumn nazwa = new TableColumn("ZAWARTOÅšÄ†");
 		nazwa.setPrefWidth(1200);
 		TableColumn index = new TableColumn("INDEX");
 		index.setPrefWidth(300);
@@ -257,7 +257,7 @@ public class Tabele implements Serializable{
 		name.setPrefWidth(300);
 		TableColumn jm = new TableColumn("Jednostka miary");
 		jm.setPrefWidth(300);
-		TableColumn ilosc = new TableColumn("Iloœæ");
+		TableColumn ilosc = new TableColumn("Iloï¿½ï¿½");
 		ilosc.setPrefWidth(300);
 		
 		index.setCellValueFactory(new PropertyValueFactory<Product, String>("index"));
@@ -275,7 +275,7 @@ public class Tabele implements Serializable{
 		ArrayList<User> userzy=new ArrayList<User>();
 		ArrayList<Person> people=new ArrayList<Person>();
 		
-		userzy=getUserzy(); //tutaj ma byæ dodawanie z bazy danych
+		userzy=getUserzy(); //tutaj ma byï¿½ dodawanie z bazy danych
 		
 		//next 10 lines to remove
 		/*User u1 = new User(1, "Adam11", "Kowalski", "Adam", "Kowalski", 0);
@@ -305,11 +305,11 @@ public class Tabele implements Serializable{
 		pracownicy.setItems(data);
 		TableColumn nazwa = new TableColumn("PRACOWNICY");
 		nazwa.setPrefWidth(1200);
-		TableColumn imie = new TableColumn("Imiê");
+		TableColumn imie = new TableColumn("Imiï¿½");
 		imie.setPrefWidth(300);
 		TableColumn nazwisko = new TableColumn("Nazwisko");
 		nazwisko.setPrefWidth(300);
-		TableColumn login = new TableColumn("Nazwa u¿ytkownika w systemie");
+		TableColumn login = new TableColumn("Nazwa uï¿½ytkownika w systemie");
 		login.setPrefWidth(300);
 		TableColumn uprawnienia = new TableColumn("Uprawnienia");
 		uprawnienia.setPrefWidth(300);
@@ -331,13 +331,13 @@ public class Tabele implements Serializable{
 		ArrayList<Odbiorca> odbiorcy=new ArrayList<Odbiorca>();
 		ArrayList<Customer> customers=new ArrayList<Customer>();
 		
-		// userzy=getUserzy(); tutaj ma byæ dodawanie z bazy danych
+		// userzy=getUserzy(); tutaj ma byï¿½ dodawanie z bazy danych
 		
 		//next 10 lines to remove
-		Odbiorca u1 = new Odbiorca ("IBM ENTERTEJMENT", "Stany Zjednoczone", "Kalafiornia", "Ul. Jana Pawa³a 2 12");
+		Odbiorca u1 = new Odbiorca ("IBM ENTERTEJMENT", "Stany Zjednoczone", "Kalafiornia", "Ul. Jana Pawaï¿½a 2 12");
 		Odbiorca u2 = new Odbiorca ("Google", "Stany Zjednoczone", "Kalafiornia", "Ul. Zdziska 12");
-		Odbiorca u3 = new Odbiorca ("Kokodzambo i do przodu", "Kenia", "Kenia City", "Ul. Jana Pawa³a 2 12");
-		Odbiorca u4 = new Odbiorca ("Rurex", "Polska", "Warszawa", "ul d³uga 222222");
+		Odbiorca u3 = new Odbiorca ("Kokodzambo i do przodu", "Kenia", "Kenia City", "Ul. Jana Pawaï¿½a 2 12");
+		Odbiorca u4 = new Odbiorca ("Rurex", "Polska", "Warszawa", "ul dï¿½uga 222222");
 		Odbiorca u5 = new Odbiorca ("Maspex GMW", "Polska", "Wadowice", "Chopina 10");
 		odbiorcy.add(u1);
 		odbiorcy.add(u2);
@@ -416,7 +416,7 @@ public class Tabele implements Serializable{
 			System.out.println("ArrayLista");
 			ArrayList<User> userzy = (ArrayList<User>) objInputStream.readObject();// znowu
 																					// castowanko
-			System.out.println("Pobra³em userów");
+			System.out.println("Pobraï¿½em userï¿½w");
 			socket.close();
 			return userzy;
 		} catch (Exception e) {

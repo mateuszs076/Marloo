@@ -3,56 +3,47 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import database.DatabsaeMySQL;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import server.connectors.ClientConnector;
+import server.threads.ConnectionListenerThread;
 
-public class Serwer extends Application implements Runnable  {
-	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root, 1200, 600);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			primaryStage.setTitle("DWAY");
-			primaryStage.setResizable(false);
+public class Serwer extends Application {
+    public void start(Stage primaryStage) {
+        try {
+            BorderPane root = new BorderPane();
+            Scene scene = new Scene(root, 1200, 600);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            primaryStage.setTitle("DWAY");
+            primaryStage.setResizable(false);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	public static void main(String[] args) {
-		launch(args);
-		int port = 752;
-		DatabsaeMySQL.initDB();
-		ServerSocket serverSocket = null;
-		try {
-			// tworzymy socket
-			serverSocket = new ServerSocket(port);
-			while (true) {
-				// czekamy na zg�oszenie klienta ...
-				Socket socket = serverSocket.accept();
-				// tworzymy w�tek dla danego po��czenia i uruchamiamy go
-				(new SerwerThread(socket)).start();
-			}
-		} catch (Exception e) {
-			System.err.println(e);
-		} finally {
-			if (serverSocket != null) {
-				try {
-					serverSocket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+
+        try {
+            ServerSocket serverSocket = new ServerSocket(1234);
+
+            //nasluchujemy na polaczenie klientow i tworzymy nowe watki
+            while (true) {
+                ClientConnector clientConnector = new ClientConnector(serverSocket);
+
+                Executor executor = Executors.newCachedThreadPool();
+                executor.execute(new ConnectionListenerThread(clientConnector));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

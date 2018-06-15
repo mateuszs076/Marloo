@@ -1,0 +1,32 @@
+package Communication.Data;
+
+import java.io.Serializable;
+
+public class Zlecenie implements Serializable {
+    private Maszyna maszyna;
+    private Produkt produkt;
+
+    public Zlecenie(Maszyna maszyna, Produkt produkt) {
+        super();
+        this.maszyna = maszyna;
+        this.produkt = produkt;
+    }
+
+    public Maszyna getMaszyna() {
+        return maszyna;
+    }
+
+    public void setMaszyna(Maszyna maszyna) {
+        this.maszyna = maszyna;
+    }
+
+    public Produkt getProdukt() {
+        return produkt;
+    }
+
+    public void setProdukt(Produkt produkt) {
+        this.produkt = produkt;
+    }
+
+
+}

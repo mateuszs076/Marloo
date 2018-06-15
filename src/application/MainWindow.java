@@ -39,11 +39,11 @@ public class MainWindow implements Serializable{
 		VBox vb=new VBox();
 		vb.resize(1250, 20);
 		MenuBar menuBar = new MenuBar();		
-		Menu menuFile = new Menu("Zawartoœæ");
-		Menu menuEdit = new Menu("Wysy³ki");
+		Menu menuFile = new Menu("Zawartoï¿½ï¿½");
+		Menu menuEdit = new Menu("Wysyï¿½ki");
 		Menu menuView = new Menu("Produkcja");
 		Menu menuWork = new Menu("Pracownicy");
-		Menu menuUser = new Menu("U¿ytkownik");
+		Menu menuUser = new Menu("Uï¿½ytkownik");
 		Menu menuSet = new Menu("Ustawienia");
 		
 		final VBox vbox = new VBox();
@@ -54,7 +54,7 @@ public class MainWindow implements Serializable{
         vbox.getChildren().addAll(Tabele.zawartosc());
         
 		
-		MenuItem menuItem1 = new MenuItem("Przegl¹daj zawartoœæ");
+		MenuItem menuItem1 = new MenuItem("Przeglï¿½daj zawartoï¿½ï¿½");
 			menuItem1.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
@@ -67,32 +67,32 @@ public class MainWindow implements Serializable{
 	            	PopUps.dodajDoMag(primaryStage);
 	            }
 	        });
-		MenuItem menuItem3 = new MenuItem("Wydaj na produkcjê");
+		MenuItem menuItem3 = new MenuItem("Wydaj na produkcjï¿½");
 			menuItem3.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	PopUps.wydajNaProdukcje(primaryStage);
 	            }
 	        });
-		MenuItem menuItem4 = new MenuItem("Przygotuj wysy³kê");
-		MenuItem menuItem5 = new MenuItem("Wyœlij przygotowan¹");
-		MenuItem menuItem6 = new MenuItem("Przegl¹daj Odbiorców");
+		MenuItem menuItem4 = new MenuItem("Przygotuj wysyï¿½kï¿½");
+		MenuItem menuItem5 = new MenuItem("Wyï¿½lij przygotowanï¿½");
+		MenuItem menuItem6 = new MenuItem("Przeglï¿½daj Odbiorcï¿½w");
 			menuItem6.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
 	            	vbox.getChildren().add(Tabele.odbiorcy());
 	            }
 	        });
-		MenuItem menuItem7 = new MenuItem("Dodaj/Usuñ Odbiorców");
+		MenuItem menuItem7 = new MenuItem("Dodaj/Usuï¿½ Odbiorcï¿½w");
 		
 		Menu menuItem8 = new Menu("Zaplecze techniczne");
-			MenuItem menuItem16 = new MenuItem("Przegl¹daj maszyny");
+			MenuItem menuItem16 = new MenuItem("Przeglï¿½daj maszyny");
 				menuItem16.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override public void handle(ActionEvent e) {
 		            	vbox.getChildren().clear();
 		            	vbox.getChildren().add(Tabele.maszyny());
 		            }
 		        });
-			MenuItem menuItem17 = new MenuItem("Dodaj maszynê");
+			MenuItem menuItem17 = new MenuItem("Dodaj maszynï¿½");
 				menuItem17.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override public void handle(ActionEvent e) {
 		            	PopUps.dodajMaszyne(primaryStage);
@@ -110,19 +110,19 @@ public class MainWindow implements Serializable{
 	            }
 	        });
 		
-		MenuItem menuItem10 = new MenuItem("Wyœwietl listê pracowników");
+		MenuItem menuItem10 = new MenuItem("Wyï¿½wietl listï¿½ pracownikï¿½w");
 			menuItem10.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
 	            	vbox.getChildren().add(Tabele.pracownicy());
 	            }
 	        });
-		MenuItem menuItem11 = new MenuItem("Wyœwietl Informcje");
+		MenuItem menuItem11 = new MenuItem("Wyï¿½wietl Informcje");
 		
-		MenuItem menuItem12 = new MenuItem("Wyœwietl Informcje");
+		MenuItem menuItem12 = new MenuItem("Wyï¿½wietl Informcje");
 		MenuItem menuItem13 = new MenuItem("Wyloguj");		
 		
-		MenuItem menuItem14 = new MenuItem("Dodaj/ Usuñ u¿ytkownika");
+		MenuItem menuItem14 = new MenuItem("Dodaj/ Usuï¿½ uï¿½ytkownika");
 		MenuItem menuItem15 = new MenuItem("Nadaj uprawnienia");
 		
 		menuFile.getItems().add(menuItem1);
