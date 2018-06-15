@@ -96,7 +96,7 @@ public class LoginWindow {
 					if(DatabsaeMySQL.login(l.getText(), p.getText())>=0)
 					MainWindow.mainWindow(primaryStage, root, DatabsaeMySQL.login(l.getText(), p.getText()));
 					else
-					System.out.println("coú posz≥o nie tak");
+					System.out.println("co≈ö posz≈Ço nie tak");
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -179,7 +179,7 @@ public class LoginWindow {
 			ObjectInputStream objInputStream = null;
 			objInputStream = new ObjectInputStream(inputStream);
             //ArrayList<User> userzy = (ArrayList<User>) objInputStream.readObject();//znowu castowanko
-			System.out.println("Pobra≥em pytanka");
+			System.out.println("Pobra≈Çem pytanka");
 			socket.close();
 			return true;
 		} catch (Exception e) {

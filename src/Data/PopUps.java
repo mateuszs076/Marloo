@@ -57,7 +57,7 @@ public class PopUps {
 		Label header=new Label("DODAWANIE DO MAGAZYNU");
 		header.setAlignment(Pos.CENTER);
 		
-		Label h1=new Label("WYBIERZ Z DOSTÊPNYCH:");
+		Label h1=new Label("WYBIERZ Z DOSTÄ˜PNYCH:");
 		h1.setLayoutX(25);
 		h1.setPadding(Insets.EMPTY);
 		
@@ -91,7 +91,7 @@ public class PopUps {
 		
 		TextField ilosc=new TextField();		
 		ilosc.setTextFormatter(textFormatter);
-		ilosc.setPromptText("ILOŒÆ");
+		ilosc.setPromptText("ILOÅšÄ†");
 		ilosc.setLayoutX(250);
 		
 		Button potwierdz=new Button("Potwierdz");
@@ -122,10 +122,10 @@ public class PopUps {
 	
 	public static void wydajNaProdukcje(Stage primaryStage)
 	{
-		Label header=new Label("Wydawanie na Produkcjê");
+		Label header=new Label("Wydawanie na ProdukcjÄ™");
 		header.setAlignment(Pos.CENTER);
 		
-		Label h1=new Label("WYBIERZ Z DOSTÊPNYCH:");
+		Label h1=new Label("WYBIERZ Z DOSTÄ˜PNYCH:");
 		h1.setLayoutX(25);
 		h1.setPadding(Insets.EMPTY);
 		
@@ -139,7 +139,7 @@ public class PopUps {
 		
 		TextField ilosc=new TextField();		
 		ilosc.setTextFormatter(textFormatter);
-		ilosc.setPromptText("ILOŒÆ");
+		ilosc.setPromptText("ILOÅšÄ†");
 		ilosc.setLayoutX(25);
 		
 		Button potwierdz=new Button("Wydaj");
@@ -172,7 +172,7 @@ public class PopUps {
 		
 		TextField ilosc=new TextField();		
 		ilosc.setTextFormatter(textFormatter);
-		ilosc.setPromptText("ILOŒÆ");
+		ilosc.setPromptText("ILOÅšÄ†");
 		ilosc.setLayoutX(25);
 		
 		Button potwierdz=new Button("Dodaj");

@@ -1,5 +1,6 @@
 package application;
 
+import application.connections.ServerConnector;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +15,7 @@ public class WelcomeClass {
 	public static void goodMorning(Stage primaryStage) {
 		BorderPane root = new BorderPane();
 		
-		ImageView logo=new ImageView(new Image("title.png"));
+		ImageView logo=new ImageView(new Image("img/title.png"));
 		//ImageView logo=new ImageView(new Image("logo.png"));
 		logo.setFitWidth(700);
 		logo.setFitHeight(130);
@@ -22,7 +23,7 @@ public class WelcomeClass {
 		logo.setLayoutY(235);
 		logo.setOpacity(0);
 		
-		ImageView solutions=new ImageView(new Image("solutions.png"));
+		ImageView solutions=new ImageView(new Image("img/solutions.png"));
 		//ImageView solutions=new ImageView(new Image("logo.png"));
 		solutions.setFitWidth(400);
 		solutions.setFitHeight(50);
@@ -30,7 +31,7 @@ public class WelcomeClass {
 		solutions.setLayoutY(200);
 		solutions.setOpacity(0);
 		
-		ImageView andyou=new ImageView(new Image("andyou.png"));
+		ImageView andyou=new ImageView(new Image("img/andyou.png"));
 		//ImageView andyou=new ImageView(new Image("logo.png"));
 		andyou.setFitWidth(350);
 		andyou.setFitHeight(50);
@@ -80,5 +81,4 @@ public class WelcomeClass {
 		
 		primaryStage.show();
 	}
-
 }

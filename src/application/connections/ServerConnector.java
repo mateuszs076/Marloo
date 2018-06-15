@@ -7,19 +7,13 @@ import java.net.Socket;
 
 
 public class ServerConnector {
+    private static final ServerConnector serverConnector = new ServerConnector();
+
     private Socket socket;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
 
-    public ServerConnector() throws IOException {
-        System.out.println("Creating ServerConnector");
-
-        String host = "localhost";
-        int port = 1234;
-
-        socket = new Socket(host, port);
-        objectInputStream = new ObjectInputStream(socket.getInputStream());
-        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+    private ServerConnector() {
     }
 
     public void sendObject(Object object) throws IOException {
@@ -33,8 +27,29 @@ public class ServerConnector {
     public Socket getSocket() {
         return socket;
     }
+
     public void closeSocket() throws IOException {
         socket.close();
         objectOutputStream.close();
+    }
+
+    public static ServerConnector getInstance() {
+        return serverConnector;
+    }
+
+    public void init() {
+        System.out.println("Creating ServerConnector");
+
+        String host = "localhost";
+        int port = 1234;
+
+        try {
+            socket = new Socket(host, port);
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
