@@ -2,8 +2,6 @@ package application;
 
 import java.io.IOException;
 
-import Communication.Communication;
-import Communication.Data.User;
 import application.connections.ServerConnector;
 import javafx.application.Application;
 import javafx.stage.Stage;

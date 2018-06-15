@@ -14,14 +14,19 @@ import java.util.Properties;
 import Data.User;
 
 public class DatabsaeMySQL implements Serializable{
-	static Connection con;
+	private Connection con;
+	private static final DatabsaeMySQL mysql = new DatabsaeMySQL();
 	
-	public DatabsaeMySQL()
+	private DatabsaeMySQL()
 	{
 		initDB();
 	}
-	
-	public static boolean checkDriver(String driver) {
+
+	public static DatabsaeMySQL getInstance() {
+		return mysql;
+	}
+
+	public boolean checkDriver(String driver) {
 		// LADOWANIE STEROWNIKA
 		System.out.print("Sprawdzanie sterownika:");
 		try {
@@ -42,7 +47,7 @@ public class DatabsaeMySQL implements Serializable{
 	 * @param password - haslo do bazy
 	 * @return - polaczenie z baza
 	 */
-	public static Connection connectToDatabase(String kindOfDatabase, String adress,
+	public Connection connectToDatabase(String kindOfDatabase, String adress,
 			String dataBaseName, String userName, String password) {
 		System.out.print("\nLaczenie z baza danych:");
 		String baza = kindOfDatabase + adress + "/" + dataBaseName;
@@ -64,7 +69,7 @@ public class DatabsaeMySQL implements Serializable{
 	 * Metoda sluzy do polaczenia z MySQL bez wybierania konkretnej bazy
 	 * @return referencja do uchwytu bazy danych
 	 */
-	public static Connection getConnection(String kindOfDatabase, String adres, int port, String userName, String password) {
+	public Connection getConnection(String kindOfDatabase, String adres, int port, String userName, String password) {
 
 		Connection conn = null;
 		Properties connectionProps = new Properties();
@@ -87,7 +92,7 @@ public class DatabsaeMySQL implements Serializable{
 	 * @param connection - polaczenie z baza
 	 * @return obiekt Statement przesylajacy zapytania do bazy
 	 */
-	static Statement createStatement(Connection connection) {
+	 public Statement createStatement(Connection connection) {
 		try {
 			return connection.createStatement();
 		} catch (SQLException e) {
@@ -103,7 +108,7 @@ public class DatabsaeMySQL implements Serializable{
 	 * @param connection - polaczenie z baza
 	 * @param s - obiekt przesylajacy zapytanie do bazy
 	 */
-	private static void closeConnection(Connection connection, Statement s) {
+	private void closeConnection(Connection connection, Statement s) {
 		System.out.print("\nZamykanie polaczenia z baza:");
 		try {
 			s.close();
@@ -123,7 +128,7 @@ public class DatabsaeMySQL implements Serializable{
 	 * @param sql - zapytanie
 	 * @return wynik
 	 */
-	private static ResultSet executeQuery(Statement s, String sql) {
+	private ResultSet executeQuery(Statement s, String sql) {
 		try {
 			return s.executeQuery(sql);
 		} catch (SQLException e) {
@@ -131,7 +136,7 @@ public class DatabsaeMySQL implements Serializable{
 		}
 		return null;
 	}
-	private static int executeUpdate(Statement s, String sql) {
+	private int executeUpdate(Statement s, String sql) {
 		try {
 			return s.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -144,7 +149,7 @@ public class DatabsaeMySQL implements Serializable{
 	 * Wyswietla dane uzyskane zapytaniem select
 	 * @param r - wynik zapytania
 	 */
-	private static void printDataFromQuery(ResultSet r) {
+	private void printDataFromQuery(ResultSet r) {
 		ResultSetMetaData rsmd;
 		try {
 			rsmd = r.getMetaData();
@@ -176,7 +181,7 @@ public class DatabsaeMySQL implements Serializable{
 	/**
 	 * Metoda pobiera dane na podstawie nazwy kolumny
 	 */
-	public static void sqlGetDataByName(ResultSet r) {
+	public void sqlGetDataByName(ResultSet r) {
 		System.out.println("Pobieranie danych z wykorzystaniem nazw kolumn");
 		try {
 			ResultSetMetaData rsmd = r.getMetaData();
@@ -225,7 +230,7 @@ public class DatabsaeMySQL implements Serializable{
 			e.printStackTrace();
 		}
 	}*/
-	public static int login(String login, String pass) throws SQLException
+	public int login(String login, String pass) throws SQLException
 	{
 		
 		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
@@ -242,7 +247,7 @@ public class DatabsaeMySQL implements Serializable{
 		st.close();
 		return u.getId();
 	}
-	public static ArrayList<User> pobierzUserow() {
+	public ArrayList<User> pobierzUserow() {
 		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
 		System.out.println("Pobieram Userow");
 		
@@ -269,7 +274,7 @@ public class DatabsaeMySQL implements Serializable{
 			return listeczka;
 		}
 	}
-	public static int addUser(String login, String haslo, String imie, String nazwisko, int uprawnienia)
+	public int addUser(String login, String haslo, String imie, String nazwisko, int uprawnienia)
 	{
 		try {
 			Statement st = createStatement(con);
@@ -285,7 +290,7 @@ public class DatabsaeMySQL implements Serializable{
 		}
 		return -1;
 	}
-	public static void initDB() {
+	public void initDB() {
 		if (checkDriver("com.mysql.jdbc.Driver"))
 			System.out.println(" ... OK");
 		else

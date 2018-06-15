@@ -1,17 +1,13 @@
 package server;
 
-import application.AboutWindow;
-import application.LoginWindow;
-import javafx.event.EventHandler;
+import database.DatabasePostgree;
+import database.DatabsaeMySQL;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import server.connectors.ClientConnector;
-
-import java.io.IOException;
 
 public class StronaSerwera {
 
@@ -19,92 +15,78 @@ public class StronaSerwera {
     }
 
     public static void okno(Stage primaryStage, BorderPane root) {
-        Text des = new Text("Przed uruchomieniem serwera prosz� uruchomi� program XAMPP");
+        Text des = new Text("Przed uruchomieniem serwera proszę uruchomić program XAMPP");
         des.setTextAlignment(TextAlignment.JUSTIFY);
         des.setLayoutX(200);
         des.setLayoutY(100);
         des.setWrappingWidth(800);
         des.getStyleClass().add("font");
 
-        Button enter = new Button("Initialize Database");
-        enter.resize(500, 100);
-        enter.setLayoutX(350);
-        enter.setLayoutY(200);
-        enter.setVisible(true);
-        enter.getStyleClass().add("button");
-        enter.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                enter.getStyleClass().add("button-entered");
-            }
-        });
-        enter.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                enter.getStyleClass().clear();
-                enter.getStyleClass().add("button");
-            }
-        });
-        enter.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-            }
-        });
-        Button about = new Button("Run Server");
-        about.resize(500, 100);
-        about.setLayoutX(350);
-        about.setLayoutY(320);
-        about.setVisible(true);
-        about.getStyleClass().add("button");
-        about.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                about.getStyleClass().add("button-entered");
-            }
-        });
-        about.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                about.getStyleClass().clear();
-                about.getStyleClass().add("button");
-            }
-        });
-        about.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                enter.getStyleClass().add("disabledButton");
-                enter.setDisable(true);
-                new Thread() {
-                    @Override
-                    public void run() {
-                        Server server = Server.getInstance();
-                        server.init();
-                    }
-                }.start();
-            }
+        Button stop_server = new Button("Stop Server");
+        stop_server.resize(500, 100);
+        stop_server.setLayoutX(350);
+        stop_server.setLayoutY(440);
+        stop_server.setVisible(true);
+        stop_server.setDisable(true);
+        stop_server.getStyleClass().add("button");
+
+        //onClicks
+        stop_server.setOnMouseEntered(me -> stop_server.getStyleClass().add("button-entered"));
+        stop_server.setOnMouseExited(me -> {
+            stop_server.getStyleClass().clear();
+            stop_server.getStyleClass().add("button");
         });
 
-        Button exit = new Button("Stop Server");
-        exit.resize(500, 100);
-        exit.setLayoutX(350);
-        exit.setLayoutY(440);
-        exit.setVisible(true);
-        exit.getStyleClass().add("button");
-        exit.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                exit.getStyleClass().add("button-entered");
-            }
-        });
-        exit.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                exit.getStyleClass().clear();
-                exit.getStyleClass().add("button");
-            }
-        });
-        exit.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                ClientConnector.getInstance().closeSocket();
-            }
+        stop_server.setOnMousePressed(me -> System.exit(1));
+
+        Button initialize_database = new Button("Initialize Database");
+        initialize_database.setDisable(true);
+        initialize_database.resize(500, 100);
+        initialize_database.setLayoutX(350);
+        initialize_database.setLayoutY(200);
+        initialize_database.setVisible(true);
+        initialize_database.getStyleClass().add("button");
+
+        initialize_database.setOnMouseEntered(me -> initialize_database.getStyleClass().add("button-entered"));
+        initialize_database.setOnMouseExited(me -> {
+            initialize_database.getStyleClass().clear();
+            initialize_database.getStyleClass().add("button");
         });
 
+        initialize_database.setOnMousePressed(me -> {
+            initialize_database.setDisable(true);
+            new Thread(() -> DatabasePostgree.getInstance().maininit()).start();
+            new Thread(() -> DatabsaeMySQL.getInstance().initDB()).start();
+        });
+
+        Button run_server = new Button("Run Server");
+        run_server.resize(500, 100);
+        run_server.setLayoutX(350);
+        run_server.setLayoutY(320);
+        run_server.setVisible(true);
+        run_server.getStyleClass().add("button");
+
+        //onClicks
+        run_server.setOnMouseEntered(me -> run_server.getStyleClass().add("button-entered"));
+        run_server.setOnMouseExited(me -> {
+            run_server.getStyleClass().clear();
+            run_server.getStyleClass().add("button");
+        });
+
+        run_server.setOnMousePressed(me -> {
+            run_server.setDisable(true);
+            initialize_database.setDisable(false);
+            stop_server.setDisable(false);
+
+            new Thread(() -> {
+                Server server = Server.getInstance();
+                server.init();
+            }).start();
+        });
 
         root.getChildren().add(des);
-        root.getChildren().add(enter);
-        root.getChildren().add(exit);
-        root.getChildren().add(about);
+        root.getChildren().add(initialize_database);
+        root.getChildren().add(stop_server);
+        root.getChildren().add(run_server);
     }
 }
