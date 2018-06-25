@@ -1,14 +1,12 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.sql.SQLException;
-import database.DatabsaeMySQL;
+import java.io.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import Communication.Communication;
+import Communication.Data.User;
+import application.connections.ServerConnector;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -21,12 +19,12 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class LoginWindow {
+//    static ServerConnector serverConnector = ServerConnector.getInstance();
+//    static boolean sprawdzanie(String login, String haslo) {
+//        return false;
+//    }
 
-    static boolean sprawdzanie(String login, String haslo) {
-        return false;
-    }
-
-    public static void login(Stage primaryStage, BorderPane root) {
+    public void login(Stage primaryStage, BorderPane root, ServerConnector serverConnector) {
         root.getChildren().clear();
 
         Text type = new Text("Type your login and password");
@@ -64,27 +62,98 @@ public class LoginWindow {
         p.setVisible(true);
         p.setAlignment(Pos.CENTER);
 
-        Button enter = new Button("Log in");
-        enter.resize(500, 80);
-        enter.setLayoutX(350);
-        enter.setLayoutY(310);
-        enter.setVisible(true);
-        enter.getStyleClass().add("button");
-        enter.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        Button create_an_acount = new Button("Create an acount");
+        create_an_acount.resize(500, 80);
+        create_an_acount.setLayoutX(350);
+        create_an_acount.setLayoutY(400);
+        create_an_acount.setVisible(true);
+        create_an_acount.getStyleClass().add("button");
+        create_an_acount.setOnMouseEntered(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
-                enter.getStyleClass().add("button-entered");
+                create_an_acount.getStyleClass().add("button-entered");
             }
         });
-        enter.setOnMouseExited(new EventHandler<MouseEvent>() {
+        create_an_acount.setOnMouseExited(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
-                enter.getStyleClass().clear();
-                enter.getStyleClass().add("button");
+                create_an_acount.getStyleClass().clear();
+                create_an_acount.getStyleClass().add("button");
             }
         });
-        enter.setOnMousePressed(new EventHandler<MouseEvent>() {
+        create_an_acount.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
-                //DatabsaeMySQL.login(l.getText(), p.getText());
-                //if(getUserzy(l.getText(), p.getText()))
+                AboutWindow.about(primaryStage, root);
+            }
+        });
+
+        Button log_in = new Button("Log in");
+        log_in.resize(500, 80);
+        log_in.setLayoutX(350);
+        log_in.setLayoutY(310);
+        log_in.setVisible(true);
+        log_in.getStyleClass().add("button");
+        log_in.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent me) {
+                log_in.getStyleClass().add("button-entered");
+            }
+        });
+        log_in.setOnMouseExited(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent me) {
+                log_in.getStyleClass().clear();
+                log_in.getStyleClass().add("button");
+            }
+        });
+        log_in.setOnMousePressed(me -> {
+            System.out.println("Mouse Pressed");
+            AtomicBoolean isAuth = new AtomicBoolean(false);
+            Object answer = Communication.UNAUTHORIZED_LOGIN;
+
+            new Thread(() -> {
+                System.out.printf("new thread");
+                if (!l.getText().trim().isEmpty() && !p.getText().trim().isEmpty()) {
+//                    System.out.printf("not empty fields");
+                    User user = new User(l.getText(), p.getText());
+//                    System.out.println("created user from fields");
+//                    new Thread(() -> {
+////                        try {
+//                            ServerConnector serverConnector = ServerConnector.getInstance();
+//                            System.out.print("try block");
+//                            System.out.print("serverconnector instance");
+                        try {
+                            System.out.println(serverConnector.toString());
+                            serverConnector.sendObject(user);
+
+                            var obj = serverConnector.receiveObject();
+                            System.out.println("received User?");
+                            if (obj != Communication.UNAUTHORIZED_LOGIN) {
+                                System.out.println("mainwindowattempt");
+                                isAuth.set(true);
+                                Platform.runLater(() -> new MainWindow().mainWindow(primaryStage, root, (User) obj));
+                            } else {
+                                System.out.println("cos nie tak z userem");
+                                //todo okno z niepoprawnym loginem
+                                isAuth.set(false);
+                            }
+                        } catch (IOException | ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+////                            serverConnector = null;
+////                        } catch (IOException e) {
+////                            e.printStackTrace();
+////                        } catch (ClassNotFoundException e) {
+////                            e.printStackTrace();
+////                        }
+//                    }).start();
+
+                    log_in.setDisable(true);
+                    create_an_acount.setDisable(true);
+                    l.clear();
+                    p.clear();
+                }
+            }).start();
+
+
+            //DatabsaeMySQL.login(l.getText(), p.getText());
+            //if(getUserzy(l.getText(), p.getText()))
 //                try {
 //                    if (DatabsaeMySQL.login(l.getText(), p.getText()) >= 0)
 //                        MainWindow.mainWindow(primaryStage, root, DatabsaeMySQL.login(l.getText(), p.getText()));
@@ -94,30 +163,6 @@ public class LoginWindow {
 //                    // TODO Auto-generated catch block
 //                    e.printStackTrace();
 //                }
-            }
-        });
-
-        Button about = new Button("Create an acount");
-        about.resize(500, 80);
-        about.setLayoutX(350);
-        about.setLayoutY(400);
-        about.setVisible(true);
-        about.getStyleClass().add("button");
-        about.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                about.getStyleClass().add("button-entered");
-            }
-        });
-        about.setOnMouseExited(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                about.getStyleClass().clear();
-                about.getStyleClass().add("button");
-            }
-        });
-        about.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                AboutWindow.about(primaryStage, root);
-            }
         });
 
         Button exit = new Button("Back");
@@ -139,7 +184,7 @@ public class LoginWindow {
         });
         exit.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
-                MainMenu.menu(primaryStage.getScene());
+                MainMenu.menu(primaryStage.getScene(), serverConnector);
             }
         });
 
@@ -149,8 +194,8 @@ public class LoginWindow {
         root.getChildren().add(log);
         root.getChildren().add(l);
         root.getChildren().add(p);
-        root.getChildren().add(enter);
-        root.getChildren().add(about);
+        root.getChildren().add(log_in);
+        root.getChildren().add(create_an_acount);
         root.getChildren().add(exit);
 
 

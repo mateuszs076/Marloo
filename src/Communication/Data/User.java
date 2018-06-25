@@ -18,6 +18,11 @@ public class User implements Serializable{
 			this.nazwisko = nazwisko;
 			this.uprawnienia = uprawnienia;
 		}
+
+		public User(String login, String haslo) {
+			this.login = login;
+			this.haslo = haslo;
+		}
 		
 		public User() {
 			super();

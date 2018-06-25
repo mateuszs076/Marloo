@@ -1,5 +1,6 @@
 package application;
 
+import application.connections.ServerConnector;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ import javafx.util.Duration;
 
 public class MainMenu {
 
-	public static void menu(Scene scene)
+	public static void menu(Scene scene, ServerConnector serverConnector)
 	{
 		BorderPane root=(BorderPane) scene.getRoot();
 		root.getChildren().clear();
@@ -74,7 +75,7 @@ public class MainMenu {
 		});
 		enter.setOnMousePressed(new EventHandler<MouseEvent>() {
 		    public void handle(MouseEvent me) {
-			      LoginWindow.login(primaryStage, root);
+			      new LoginWindow().login(primaryStage, root, serverConnector);
 			    }
 		});
 		

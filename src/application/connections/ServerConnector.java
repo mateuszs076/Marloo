@@ -5,18 +5,33 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-
-public class ServerConnector {
-    private static final ServerConnector serverConnector = new ServerConnector();
+public class ServerConnector extends Thread {
 
     private Socket socket;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
 
-    private ServerConnector() {
+    public ServerConnector() {
+        System.out.println("Creating ServerConnector");
+
+        String host = "localhost";
+        int port = 9999;
+
+        try {
+            socket = new Socket(host, port);
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run() {
     }
 
     public void sendObject(Object object) throws IOException {
+        System.out.println("Sending object..");
         objectOutputStream.writeObject(object);
     }
 
@@ -31,25 +46,5 @@ public class ServerConnector {
     public void closeSocket() throws IOException {
         socket.close();
         objectOutputStream.close();
-    }
-
-    public static ServerConnector getInstance() {
-        return serverConnector;
-    }
-
-    public void init() {
-        System.out.println("Creating ServerConnector");
-
-        String host = "localhost";
-        int port = 1234;
-
-        try {
-            socket = new Socket(host, port);
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }

@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-import Data.PopUps;
-import Data.Tabele;
+import Communication.Data.PopUps;
+import Communication.Data.Tabele;
+import Communication.Data.User;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,10 +31,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-public class MainWindow implements Serializable{
+public class MainWindow {
 	
 	
-	public static void mainWindow(Stage primaryStage, BorderPane root, int i) {
+	public void mainWindow(Stage primaryStage, BorderPane root, User user) {
 		root.getChildren().clear();
 		
 		VBox vb=new VBox();
@@ -154,7 +155,7 @@ public class MainWindow implements Serializable{
 		menuBar.getMenus().addAll(menuFile, menuEdit, menuView, menuWork, menuUser, menuSet);
 		menuBar.resize(1250,0);
 		vb.getChildren().addAll(menuBar);
-		vb.getChildren().addAll(new Text("Zalogowano jako: "+ i));
+		vb.getChildren().addAll(new Text("Zalogowano jako: "+ user.getImie() + " " + user.getNazwisko()));
 		root.getChildren().add(vb);
 		root.getChildren().add(vbox);
 	}

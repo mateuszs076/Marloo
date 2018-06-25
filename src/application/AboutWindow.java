@@ -43,7 +43,7 @@ public class AboutWindow {
 		exit.setOnMousePressed(new EventHandler<MouseEvent>() {
 		    public void handle(MouseEvent me) {
 		    	primaryStage.close();
-		       MainMenu.menu(primaryStage.getScene());
+//		       MainMenu.menu(primaryStage.getScene(), );
 		    }
 		});
 		

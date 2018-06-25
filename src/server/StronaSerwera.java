@@ -1,13 +1,12 @@
 package server;
 
-import database.DatabasePostgree;
-import database.DatabsaeMySQL;
+import server.database.DatabasePostgree;
+import server.database.DatabsaeMySQL;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import server.connectors.ClientConnector;
 
 public class StronaSerwera {
 
@@ -78,10 +77,7 @@ public class StronaSerwera {
             initialize_database.setDisable(false);
             stop_server.setDisable(false);
 
-            new Thread(() -> {
-                Server server = Server.getInstance();
-                server.init();
-            }).start();
+            new Thread(Server::new).start();
         });
 
         root.getChildren().add(des);

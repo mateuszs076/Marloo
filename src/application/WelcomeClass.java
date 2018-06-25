@@ -9,10 +9,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import server.Server;
 
 public class WelcomeClass {
 
-	public static void goodMorning(Stage primaryStage) {
+	private ServerConnector serverConnector;
+	private Stage primaryStage;
+
+	public WelcomeClass(Stage primaryStage, ServerConnector serverConnector) {
+		this.primaryStage = primaryStage;
+		this.serverConnector = serverConnector;
+	}
+
+	public void goodMorning(Stage primaryStage) {
 		BorderPane root = new BorderPane();
 		
 		ImageView logo=new ImageView(new Image("img/title.png"));
@@ -65,7 +74,7 @@ public class WelcomeClass {
                             public void handle(ActionEvent arg0) {
                             	primaryStage.close();
                             	root.getChildren().clear();
-                            	MainMenu.menu(primaryStage.getScene());               		
+                            	MainMenu.menu(primaryStage.getScene(), serverConnector);
                             }
                         });
                     }

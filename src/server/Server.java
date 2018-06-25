@@ -10,20 +10,14 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private static final Server server = new Server();
-
-    private Server() {
-    }
-
-    void init() {
+    public Server() {
         try {
-            ServerSocket serverSocket = new ServerSocket(1234);
+            ServerSocket serverSocket = new ServerSocket(9999);
             System.out.print("Tworzymy nowy serwer");
 
             //nasluchujemy na polaczenie klientow i tworzymy nowe watki
             while(true){
-                ClientConnector clientConnector = ClientConnector.getInstance();
-                clientConnector.acceptSocket(serverSocket);
+                ClientConnector clientConnector = new ClientConnector(serverSocket);
 
                 Executor executor = Executors.newCachedThreadPool();
                 executor.execute(new ConnectionListenerThread(clientConnector));
@@ -31,9 +25,5 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static Server getInstance() {
-        return server;
     }
 }
