@@ -123,7 +123,7 @@ public class LoginWindow {
 		});
 		about.setOnMousePressed(new EventHandler<MouseEvent>() {
 		    public void handle(MouseEvent me) {
-			      AboutWindow.about(primaryStage, root);
+			      RegisterWindow.register(primaryStage, root);
 			    }
 		});
 		

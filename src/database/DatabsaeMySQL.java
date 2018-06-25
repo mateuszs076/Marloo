@@ -271,10 +271,14 @@ public class DatabsaeMySQL implements Serializable{
 	}
 	public static int addUser(String login, String haslo, String imie, String nazwisko, int uprawnienia)
 	{
+		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
+		System.out.println("Dodaje usera");
+		
 		try {
 			Statement st = createStatement(con);
+			if (executeUpdate(st, "USE nowaBaza;") == 0)
+				System.out.println("Baza wybrana");
 			ResultSet r = executeQuery(st, "Select MAX(id) from uzytkownicy_;");
-			r.next();
 			int id = ((int)r.getObject(1)+1);
 			executeUpdate(st, "INSERT INTO users VALUES("+id+", '"+login+"', '"+haslo+"', '"+imie+"', '"+nazwisko+"', "+uprawnienia+");");
 			st.close();
