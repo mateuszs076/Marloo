@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+import com.sun.prism.paint.Color;
+
 import Data.PopUps;
 import Data.Tabele;
 import javafx.collections.FXCollections;
@@ -154,7 +156,56 @@ public class MainWindow implements Serializable{
 		menuBar.getMenus().addAll(menuFile, menuEdit, menuView, menuWork, menuUser, menuSet);
 		menuBar.resize(1250,0);
 		vb.getChildren().addAll(menuBar);
-		vb.getChildren().addAll(new Text("Zalogowano jako: "+ i));
+		Text oo;
+		switch(i)
+		{
+		case 1:
+			oo=new Text("Zalogowano jako ADMINISTATOR");
+		break;
+		case 2:
+			oo=new Text("Zalogowano jako: KIEROWNIK");			
+		break;	
+		case 3:oo=new Text("Zalogowano jako: PRACOWNIK MAGAZYNU");
+			menuItem17.setDisable(true);
+			menuItem18.setDisable(true);
+			menuItem14.setDisable(true);
+			menuItem15.setDisable(true);
+		break;
+		case 4:oo=new Text("Zalogowano jako: STARSZY PRACOWNIK");
+		menuItem2.setDisable(true);
+		menuItem3.setDisable(true);
+		menuItem7.setDisable(true);
+		menuItem14.setDisable(true);
+		menuItem15.setDisable(true);
+		break;
+		case 5:oo=new Text("Zalogowano jako: M£ODSZY PRACOWNIK");
+		menuItem17.setDisable(true);
+		menuItem14.setDisable(true);
+		menuItem15.setDisable(true);
+		menuItem2.setDisable(true);
+		menuItem3.setDisable(true);
+		menuItem7.setDisable(true);
+		menuItem4.setDisable(true);
+		menuItem5.setDisable(true);
+		menuItem9.setDisable(true);		
+		break;
+		case 6:oo=new Text("Zalogowano jako: STA¯YSTA");
+		menuItem17.setDisable(true);
+		menuItem18.setDisable(true);
+		menuItem14.setDisable(true);
+		menuItem15.setDisable(true);
+		menuItem2.setDisable(true);
+		menuItem3.setDisable(true);
+		menuItem7.setDisable(true);
+		menuItem4.setDisable(true);
+		menuItem5.setDisable(true);
+		menuItem9.setDisable(true);		
+		break;
+		default:oo=new Text("Zalogowano jako: UNDEFINED");
+		}
+		oo.setStyle("-fx-font-size: 15pt;");
+		oo.setFill(javafx.scene.paint.Color.NAVY);
+		vb.getChildren().addAll(oo);
 		root.getChildren().add(vb);
 		root.getChildren().add(vbox);
 	}

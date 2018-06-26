@@ -50,9 +50,19 @@ public class ServerThread extends Thread {
 					objOutputStream.writeObject(DatabsaeMySQL.pobierzUserow());
 					objOutputStream.flush();			
 				}
-				if (data[0].equals("userzy")) {
+				if (data[0].equals("produkty")) {
 					System.out.println("produkty");
 					objOutputStream.writeObject(DatabasePostgree.readProdukty());
+					objOutputStream.flush();			
+				}
+				if (data[0].equals("odbiorcy")) {
+					System.out.println("odbiorcy");
+					objOutputStream.writeObject(DatabsaeMySQL.pobierzOdbiorcow());
+					objOutputStream.flush();			
+				}
+				if (data[0].equals("maszyny")) {
+					System.out.println("maszyny");
+					objOutputStream.writeObject(DatabasePostgree.readMaszyna());
 					objOutputStream.flush();			
 				}
 				System.out.println("Zakończono połączenie z" + mySocket.getInetAddress());

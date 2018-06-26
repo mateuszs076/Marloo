@@ -1,6 +1,9 @@
 package Data;
 
-public class Produkt {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Produkt implements Serializable{
 	String index;
 	String nazwa;
 	String jednostka;
@@ -44,6 +47,11 @@ public class Produkt {
 		this.nazwa = nazwa;
 		this.jednostka = jednostka;
 		this.ilosc = ilosc;
+	}
+
+	@Override
+	public String toString() {
+		return "Produkt index=" + index + ", nazwa=" + nazwa + ", jednostka=" + jednostka;
 	}
 	
 	

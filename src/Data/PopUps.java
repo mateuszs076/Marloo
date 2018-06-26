@@ -1,9 +1,11 @@
 package Data;
 
+import java.util.ArrayList;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -56,16 +58,9 @@ public class PopUps {
 	{
 		Label header=new Label("DODAWANIE DO MAGAZYNU");
 		header.setAlignment(Pos.CENTER);
+	
 		
-		Label h1=new Label("WYBIERZ Z DOSTÊPNYCH:");
-		h1.setLayoutX(25);
-		h1.setPadding(Insets.EMPTY);
-		
-		ChoiceBox index = new ChoiceBox(FXCollections.observableArrayList("TUTAJ", "BEDA", "DANE", "Z", "BAZY"));
-		index.setPrefWidth(450);
-		index.setLayoutX(25);
-		
-		Label h2=new Label("LUB PODAJ NOWE DANE:");
+		Label h2=new Label("PODAJ NOWE DANE:");
 		h2.setLayoutX(25);
 		
 		TextField ind=new TextField();
@@ -114,8 +109,8 @@ public class PopUps {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
         VBox dialogVbox = new VBox(30);
-        dialogVbox.getChildren().addAll(header, h1, index, h2,  hb1, hb2, potwierdz);
-        Scene dialogScene = new Scene(dialogVbox, 500, 500) ;
+        dialogVbox.getChildren().addAll(header,  h2,  hb1, hb2, potwierdz);
+        Scene dialogScene = new Scene(dialogVbox, 500, 400) ;
         dialog.setScene(dialogScene);
         dialog.show();
 	}
@@ -129,7 +124,10 @@ public class PopUps {
 		h1.setLayoutX(25);
 		h1.setPadding(Insets.EMPTY);
 		
-		ChoiceBox index = new ChoiceBox(FXCollections.observableArrayList("TUTAJ", "BEDA", "DANE", "Z", "BAZY"));
+		ArrayList<Produkt> p=new ArrayList<Produkt>();
+		p=Tabele.getProdukty();
+		
+		ChoiceBox index = new ChoiceBox(FXCollections.observableArrayList(p));
 		index.setPrefWidth(450);
 		index.setLayoutX(25);
 		

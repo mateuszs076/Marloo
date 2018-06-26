@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -89,8 +90,12 @@ public class Tabele implements Serializable{
 
 	}
 	
-	public static class Customer {
+	public static class Customer implements Serializable{
 	
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private SimpleStringProperty name;
 		private SimpleStringProperty country;
 		private SimpleStringProperty city;
@@ -147,8 +152,12 @@ public class Tabele implements Serializable{
 	}
 
 	
-	public static class Product {
+	public static class Product implements Serializable{
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private SimpleStringProperty index;
 		private SimpleStringProperty nazwa;
 		private SimpleStringProperty jednostka;
@@ -215,16 +224,71 @@ public class Tabele implements Serializable{
 
 	
 	}
+
+	public static class Machine implements Serializable{
+		
+		/**
+		 * 
+		 */
+		private static long serialVersionUID = 1L;
+		private SimpleStringProperty nazwa;
+		private SimpleIntegerProperty czasprocesu;
+		private SimpleStringProperty produkowane;
+		
+		public Machine(Maszyna m) {
+			super();
+			this.nazwa = new SimpleStringProperty(m.getNazwa());
+			this.czasprocesu = new SimpleIntegerProperty(m.getCzasprocesu());
+			this.produkowane = new SimpleStringProperty(m.getProdukowane1());
+		
+		}
+
+		public static long getSerialversionuid() {
+			return serialVersionUID;
+		}
+
+		public static void setSerialversionuid(long serialversionuid) {
+			serialVersionUID = serialversionuid;
+		}
+
+		public String getNazwa() {
+			return nazwa.get();
+		}
+
+		public void setNazwa(SimpleStringProperty nazwa) {
+			this.nazwa = nazwa;
+		}
+
+		public Integer getCzasprocesu() {
+			return czasprocesu.get();
+		}
+
+		public void setCzasprocesu(SimpleIntegerProperty czasprocesu) {
+			this.czasprocesu = czasprocesu;
+		}
+
+		public String getProdukowane() {
+			return produkowane.get();
+		}
+
+		public void setProdukowane(SimpleStringProperty produkowane) {
+			this.produkowane = produkowane;
+		}
+	
+		
+
+	
+	}
 	
 
 	public static TableView zawartosc() {
 		ArrayList<Produkt> produkty=new ArrayList<Produkt>();
 		ArrayList<Product> products=new ArrayList<Product>();
 		
-		// produkty=getProdukty(); //tutaj ma byæ dodawanie z bazy danych
+		 produkty=getProdukty(); //tutaj ma byæ dodawanie z bazy danych
 		
 		//next 10 lines to remove
-		Produkt u1 = new Produkt("4COSTAM2COSTAM3", "Dzbanek na wodê", "szt", 1);
+	/*	Produkt u1 = new Produkt("4COSTAM2COSTAM3", "Dzbanek na wodê", "szt", 1);
 		Produkt u2 = new Produkt("4COSTAM2COSTAM3", "M¹ka", "kg", 1200);
 		Produkt u3 = new Produkt("4COSTAM2COSTAM3", "Taœma malarska du¿a", "m", 12.4);
 		Produkt u4 = new Produkt("4COSTAM2COSTAM3", "Parapet zielony", "szt", 1);
@@ -233,7 +297,7 @@ public class Tabele implements Serializable{
 		produkty.add(u2);
 		produkty.add(u3);
 		produkty.add(u4);
-		produkty.add(u5);
+		produkty.add(u5);*/
 		
 		
 		for(int i=0; i<produkty.size(); i++)
@@ -331,10 +395,10 @@ public class Tabele implements Serializable{
 		ArrayList<Odbiorca> odbiorcy=new ArrayList<Odbiorca>();
 		ArrayList<Customer> customers=new ArrayList<Customer>();
 		
-		// userzy=getUserzy(); tutaj ma byæ dodawanie z bazy danych
+		odbiorcy=getOdbiorcy(); //tutaj ma byæ dodawanie z bazy danych
 		
 		//next 10 lines to remove
-		Odbiorca u1 = new Odbiorca ("IBM ENTERTEJMENT", "Stany Zjednoczone", "Kalafiornia", "Ul. Jana Pawa³a 2 12");
+		/*Odbiorca u1 = new Odbiorca ("IBM ENTERTEJMENT", "Stany Zjednoczone", "Kalafiornia", "Ul. Jana Pawa³a 2 12");
 		Odbiorca u2 = new Odbiorca ("Google", "Stany Zjednoczone", "Kalafiornia", "Ul. Zdziska 12");
 		Odbiorca u3 = new Odbiorca ("Kokodzambo i do przodu", "Kenia", "Kenia City", "Ul. Jana Pawa³a 2 12");
 		Odbiorca u4 = new Odbiorca ("Rurex", "Polska", "Warszawa", "ul d³uga 222222");
@@ -343,7 +407,7 @@ public class Tabele implements Serializable{
 		odbiorcy.add(u2);
 		odbiorcy.add(u3);
 		odbiorcy.add(u4);
-		odbiorcy.add(u5);
+		odbiorcy.add(u5);*/
 		
 		
 		for(int i=0; i<odbiorcy.size(); i++)
@@ -384,6 +448,34 @@ public class Tabele implements Serializable{
 	public static TableView maszyny() {
 		TableView maszyny = new TableView();
 		maszyny.setEditable(true);
+		ArrayList<Maszyna> maszynny=new ArrayList<Maszyna>();
+		ArrayList<Machine> machines=new ArrayList<Machine>();
+		
+		maszynny=getMaszyny(); //tutaj ma byæ dodawanie z bazy danych
+		
+		//next 10 lines to remove
+		/*Odbiorca u1 = new Odbiorca ("IBM ENTERTEJMENT", "Stany Zjednoczone", "Kalafiornia", "Ul. Jana Pawa³a 2 12");
+		Odbiorca u2 = new Odbiorca ("Google", "Stany Zjednoczone", "Kalafiornia", "Ul. Zdziska 12");
+		Odbiorca u3 = new Odbiorca ("Kokodzambo i do przodu", "Kenia", "Kenia City", "Ul. Jana Pawa³a 2 12");
+		Odbiorca u4 = new Odbiorca ("Rurex", "Polska", "Warszawa", "ul d³uga 222222");
+		Odbiorca u5 = new Odbiorca ("Maspex GMW", "Polska", "Wadowice", "Chopina 10");
+		odbiorcy.add(u1);
+		odbiorcy.add(u2);
+		odbiorcy.add(u3);
+		odbiorcy.add(u4);
+		odbiorcy.add(u5);*/
+		
+		
+		for(int i=0; i<maszynny.size(); i++)
+		{
+			machines.add(new Machine(maszynny.get(i)));
+		}
+		
+		
+		
+		final ObservableList<Machine> data = FXCollections.observableArrayList();
+		data.addAll(machines);
+		maszyny.setItems(data);
 
 		TableColumn nazwa = new TableColumn("MASZYNY");
 		nazwa.setPrefWidth(1200);
@@ -393,6 +485,10 @@ public class Tabele implements Serializable{
 		nazwisko.setPrefWidth(400);
 		TableColumn login = new TableColumn("Produkowane");
 		login.setPrefWidth(400);
+		
+		imie.setCellValueFactory(new PropertyValueFactory<Machine, String>("nazwa"));
+		nazwisko.setCellValueFactory(new PropertyValueFactory<Machine, String>("czasprocesu"));
+		login.setCellValueFactory(new PropertyValueFactory<Machine, String>("produkowane"));
 
 		nazwa.getColumns().addAll(imie, nazwisko, login);
 		maszyny.getColumns().addAll(nazwa);
@@ -424,6 +520,31 @@ public class Tabele implements Serializable{
 			return null;
 		}
 	}
+	public static ArrayList<Odbiorca> getOdbiorcy() {
+		try {
+			int port = 1003;// port na sztywno
+			Socket socket = new Socket("127.0.0.1", port);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+			String str = "odbiorcy";// warunek na serwerze ServerThred.30
+
+			socket.setTcpNoDelay(true);
+			out.println(str);
+			out.flush();
+			InputStream inputStream = socket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+			System.out.println("ArrayLista odbiorcy");
+			ArrayList<Odbiorca> userzy = (ArrayList<Odbiorca>) objInputStream.readObject();// znowu
+																					// castowanko
+			System.out.println("Pobra³em odbiorców");
+			socket.close();
+			return userzy;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
+	}
 	public static ArrayList<Produkt> getProdukty() {
 		try {
 			int port = 1003;// port na sztywno
@@ -442,6 +563,31 @@ public class Tabele implements Serializable{
 			ArrayList<Produkt> produkty = (ArrayList<Produkt>) objInputStream.readObject();// znowu
 																					// castowanko
 			System.out.println("Pobra³em produkty");
+			socket.close();
+			return produkty;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
+	}
+	public static ArrayList<Maszyna> getMaszyny() {
+		try {
+			int port = 1003;// port na sztywno
+			Socket socket = new Socket("127.0.0.1", port);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+			String str = "maszyny";// warunek na serwerze ServerThred.30
+
+			socket.setTcpNoDelay(true);
+			out.println(str);
+			out.flush();
+			InputStream inputStream = socket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+			System.out.println("ArrayLista Maszyna");
+			ArrayList<Maszyna> produkty = (ArrayList<Maszyna>) objInputStream.readObject();// znowu
+																					// castowanko
+			System.out.println("Pobra³em Maszyna");
 			socket.close();
 			return produkty;
 		} catch (Exception e) {

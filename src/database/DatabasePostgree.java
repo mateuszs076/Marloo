@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import Data.Maszyna;
 import Data.Produkt;
 
 public class DatabasePostgree {
@@ -55,11 +56,49 @@ public class DatabasePostgree {
 	        } catch (SQLException e) {
 	            System.out.println(e);
 	        }
+	        try {
+	            Statement st = con.createStatement();
+	            st.executeUpdate("CREATE TABLE Maszyny( id int PRIMARY KEY, nazwa varchar(255) NOT NULL, czasprocesu integer NOT NULL, produkowane varchar(300) NOT NULL);");
+	            st.close();
+	        } catch (SQLException e) {
+	            System.out.println(e);
+	        }
 	    }
 	 public static void init2() {
 	        try {
 	            Statement st = con.createStatement();
 	            st.executeUpdate("INSERT INTO Produkty VALUES ( 0, '2PRO1DUKT0', 'Produkt Pierwszy Testowy Du¿y EXP', 'kg', 200.20);");
+	            st.close();
+	            st = con.createStatement();
+	            st.executeUpdate("INSERT INTO Produkty VALUES ( 1, '2PRO2DUKT2', 'Produkt Drugi Testowy Ma³y Lock', 'cm', 1233);");
+	            st.close();
+	            st = con.createStatement();
+	            st.executeUpdate("INSERT INTO Produkty VALUES ( 2, '2PRO3DUKT3', 'Trzeci Produkt Zamiennik Zielony Metalik', 'szt', 3);");
+	            st.close();
+	            st = con.createStatement();
+	            st.executeUpdate("INSERT INTO Produkty VALUES ( 3, '2PRO4DUKT4', 'Kolejny Produkt EXP', 'szt', 42);");
+	            st.close();
+	            st = con.createStatement();
+	            st.executeUpdate("INSERT INTO Produkty VALUES ( 4, '2PRO5DUKT5', 'Alternat. EXP Produkt Du¿y', 'cm', 42.22);");
+	            st.close();
+	        } catch (SQLException e) {
+	            System.out.println(e);
+	        }
+	        try {
+	            Statement st = con.createStatement();
+	            st.executeUpdate("INSERT INTO Maszyny VALUES ( 0, 'MB1', 380, 'Produkt Drugi Testowy Ma³y Lock');");
+	            st.close();
+	            st = con.createStatement();
+	            st.executeUpdate("INSERT INTO Maszyny VALUES ( 1, 'KRT2', 1200, 'Produkt Drugi Testowy Ma³y Lock');");
+	            st.close();
+	            st = con.createStatement();
+	            st.executeUpdate("INSERT INTO Maszyny VALUES ( 2, 'KRT3', 540, 'Alternat. EXP Produkt Du¿y');");
+	            st.close();
+	            st = con.createStatement();
+	            st.executeUpdate("INSERT INTO Maszyny VALUES ( 3, 'KRT4', 600, 'Alternat. EXP Produkt Du¿y');");
+	            st.close();
+	            st = con.createStatement();
+	            st.executeUpdate("INSERT INTO Maszyny VALUES ( 4, 'WMB', 100,  'Produkt Pierwszy Testowy Du¿y EXP');");
 	            st.close();
 	        } catch (SQLException e) {
 	            System.out.println(e);
@@ -70,7 +109,7 @@ public class DatabasePostgree {
 	    {
 		System.out.println("DatabasePosgre - > readProdukty NIE DZIA£A!");
 	       ArrayList<Produkt> a = new ArrayList<Produkt>();
-	       /* try {
+	       try {
 	            Statement st = con.createStatement();
 	            
 	            ResultSet r = st.executeQuery("SELECT * FROM Produkty");
@@ -82,7 +121,26 @@ public class DatabasePostgree {
 	        } catch (SQLException e) {
 	            System.out.println(e);
 	        }
-	        System.out.println(a.toString());*/
+	        System.out.println(a.toString());
+	        return a;
+	    }
+	 public static ArrayList<Maszyna> readMaszyna()
+	    {
+		System.out.println("DatabasePosgre - > readMaszyny NIE DZIA£A!");
+	       ArrayList<Maszyna> a = new ArrayList<Maszyna>();
+	       try {
+	            Statement st = con.createStatement();
+	            
+	            ResultSet r = st.executeQuery("SELECT * FROM Maszyny");
+	            while(r.next())
+	            {
+	                a.add(new Maszyna(r.getString("nazwa"), r.getInt("czasprocesu"), r.getString("produkowane")));
+	            }
+	            st.close();
+	        } catch (SQLException e) {
+	            System.out.println(e);
+	        }
+	        System.out.println(a.toString());
 	        return a;
 	    }
 	 public static void maininit()

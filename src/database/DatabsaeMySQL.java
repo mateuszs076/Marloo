@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import Data.Odbiorca;
 import Data.User;
 
 public class DatabsaeMySQL implements Serializable{
@@ -269,6 +270,33 @@ public class DatabsaeMySQL implements Serializable{
 			return listeczka;
 		}
 	}
+	public static ArrayList<Odbiorca> pobierzOdbiorcow() {
+		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
+		System.out.println("Pobieram Odbiorców");
+		
+		ArrayList<Odbiorca> listeczka = new ArrayList<Odbiorca>();
+		
+		try {
+			Statement st = createStatement(con);
+			if (executeUpdate(st, "USE nowaBaza;") == 0)
+				System.out.println("Baza wybrana");
+			ResultSet r = executeQuery(st, "SELECT * FROM odbiorcy_;");
+			while (r.next())
+				listeczka.add(new Odbiorca( r.getString("nazwa"), r.getString("kraj"), r.getString("miasto"),
+						r.getString("adres")));
+			st.close();
+			System.out.println("odbiorcy pobrane "+listeczka.get(0).getNazwa());
+			
+
+		} catch (SQLException e) {
+			System.out.println("Nie mogłem pobrać odbiorcow, ponieważ:");
+			e.printStackTrace();
+		}
+		finally
+		{
+			return listeczka;
+		}
+	}
 	public static int addUser(String login, String haslo, String imie, String nazwisko, int uprawnienia)
 	{
 		Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
@@ -316,10 +344,40 @@ public class DatabsaeMySQL implements Serializable{
 			System.out.println("Tabela utworzona");
 		else
 			System.out.println("Tabela nie utworzona!");
-		String sql = "INSERT INTO uzytkownicy_ VALUES(1, 'admin', 'admin', 'adam', 'admin', 0);";
+		String sql = "INSERT INTO uzytkownicy_ VALUES(1, 'admin', 'admin', 'Pan', 'Administrator', 0);";
+		executeUpdate(st, sql);
+		sql = "INSERT INTO uzytkownicy_ VALUES(2, 'kierownik', 'kierownik', 'Jan', 'Kowalski', 1);";
+		executeUpdate(st, sql);
+		sql = "INSERT INTO uzytkownicy_ VALUES(3, 'magazynier', 'magazynier', 'Tomasz', 'Nowak', 2);";
+		executeUpdate(st, sql);
+		sql = "INSERT INTO uzytkownicy_ VALUES(4, 'starszypracownik', 'starszypracownik', 'Dominik', 'Marek', 3);";
+		executeUpdate(st, sql);
+		sql = "INSERT INTO uzytkownicy_ VALUES(5, 'mlodszypracownik', 'mlodszypracownik', 'Kamil', 'Wujek', 4);";
+		executeUpdate(st, sql);
+		sql = "INSERT INTO uzytkownicy_ VALUES(6, 'stazysta', 'stazsta', 'Adam', 'Adamski', 5);";
 		executeUpdate(st, sql);
 		sql = "Select * from uzytkownicy_;";
 		printDataFromQuery(executeQuery(st, sql));
+		
+		if (executeUpdate(st,
+				"CREATE TABLE odbiorcy_ ( id INT NOT NULL, nazwa VARCHAR(50) NOT NULL, kraj VARCHAR(50) NOT NULL, miasto VARCHAR(50) NOT NULL, adres VARCHAR(50) NOT NULL, PRIMARY KEY (id) );") == 0)
+			System.out.println("Tabela utworzona");
+		else
+			System.out.println("Tabela nie utworzona!");
+		sql = "INSERT INTO odbiorcy_ VALUES(1, 'Drutex S.z.o.o', 'Polska', 'Warszawa', 'Woronicza 17');";
+		executeUpdate(st, sql);
+		sql = "INSERT INTO odbiorcy_ VALUES(2, 'Saudi GMBH', 'Niemcy', 'Monachium', 'Goetego 34/2');";
+		executeUpdate(st, sql);
+		sql = "INSERT INTO odbiorcy_ VALUES(3, 'Ratara', 'Hiszpania', 'Madryt', 'al. sw. Jana Kantego');";
+		executeUpdate(st, sql);
+		sql = "INSERT INTO odbiorcy_ VALUES(4, 'MiddleeE', 'Francja', 'Marsylia', 'Lazurowa 99');";
+		executeUpdate(st, sql);
+		sql = "INSERT INTO odbiorcy_ VALUES(5, 'All4You', 'Rosja', 'Moskwa', 'Armii Czerwonej 12');";
+		executeUpdate(st, sql);
+		sql = "Select * from odbiorcy_;";
+		printDataFromQuery(executeQuery(st, sql));
+		
+		
 		//closeConnection(con, st);
 	
 	}
