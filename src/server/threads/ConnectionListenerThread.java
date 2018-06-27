@@ -31,24 +31,34 @@ public class ConnectionListenerThread implements Runnable {
         while (true) {
             try {
                 obj = cc.receiveObject();
-                if(obj != null) {
+                if (obj != null) {
                     System.out.println("najs!");
                 }
                 if (obj instanceof User) {
-                    System.out.println("got action1");
-                    try {
-                        var user = DatabsaeMySQL.getInstance().login(((User) obj).getLogin(), ((User) obj).getHaslo());
-                        if (user != null) {
-                            cc.sendObject((User) user);
-                            System.out.println("tak!");
-                        } else {
-                            cc.sendObject(UNAUTHORIZED_LOGIN);
-                            System.out.println("nie1");
+                    if (!(((User) obj).isAddingUser())) {
+                        System.out.println("got action1");
+                        try {
+                            var user = DatabsaeMySQL.getInstance().login(((User) obj).getLogin(), ((User) obj).getHaslo());
+                            if (user != null) {
+                                cc.sendObject((User) user);
+                                System.out.println("tak!");
+                            } else {
+                                cc.sendObject(UNAUTHORIZED_LOGIN);
+                                System.out.println("nie1");
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+//                        cc.closeSocket();
+                    } else {
+                        DatabsaeMySQL.getInstance().addUser(
+                                ((User) obj).getImie(),
+                                ((User) obj).getNazwisko(),
+                                ((User) obj).getLogin(),
+                                ((User) obj).getHaslo());
+
+                        System.out.println("Adding user server side");
                     }
-                    cc.closeSocket();
                 }
 
             } catch (SocketException se) {

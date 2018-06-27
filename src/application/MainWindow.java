@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import Communication.Data.PopUps;
 import Communication.Data.Tabele;
 import Communication.Data.User;
+import application.connections.ServerConnector;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,13 +28,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 public class MainWindow {
-	
-	
+
+	private ServerConnector serverConnector;
+
+	public MainWindow(ServerConnector serverConnector) {
+		this.serverConnector = serverConnector;
+	}
+
 	public void mainWindow(Stage primaryStage, BorderPane root, User user) {
 		root.getChildren().clear();
 		
@@ -122,7 +126,10 @@ public class MainWindow {
 		
 		MenuItem menuItem12 = new MenuItem("Wy�wietl Informcje");
 		MenuItem menuItem13 = new MenuItem("Wyloguj");		
-		
+		menuItem13.setOnAction(e -> {
+			new LoginWindow().login(primaryStage, root, serverConnector);
+		});
+
 		MenuItem menuItem14 = new MenuItem("Dodaj/ Usu� u�ytkownika");
 		MenuItem menuItem15 = new MenuItem("Nadaj uprawnienia");
 		

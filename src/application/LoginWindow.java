@@ -81,7 +81,7 @@ public class LoginWindow {
         });
         create_an_acount.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent me) {
-                AboutWindow.about(primaryStage, root);
+                new RegisterWindow(serverConnector).register(primaryStage, root);
             }
         });
 
@@ -127,7 +127,7 @@ public class LoginWindow {
                             if (obj != Communication.UNAUTHORIZED_LOGIN) {
                                 System.out.println("mainwindowattempt");
                                 isAuth.set(true);
-                                Platform.runLater(() -> new MainWindow().mainWindow(primaryStage, root, (User) obj));
+                                Platform.runLater(() -> new MainWindow(serverConnector).mainWindow(primaryStage, root, (User) obj));
                             } else {
                                 System.out.println("cos nie tak z userem");
                                 //todo okno z niepoprawnym loginem

@@ -2,84 +2,102 @@ package Communication.Data;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
-		private int id;
-		private String login;
-		private String haslo;
-		private String imie;
-		private String nazwisko;
-		private int uprawnienia;
-		public User(int id, String login, String haslo, String imie, String nazwisko,int uprawnienia) {
-			super();
-			this.id = id;
-			this.login = login;
-			this.haslo = haslo;
-			this.imie = imie;
-			this.nazwisko = nazwisko;
-			this.uprawnienia = uprawnienia;
-		}
+public class User implements Serializable {
+    private int id;
+    private String login;
+    private String haslo;
+    private String imie;
+    private String nazwisko;
+    private int uprawnienia;
+    private boolean isAddingUser;
 
-		public User(String login, String haslo) {
-			this.login = login;
-			this.haslo = haslo;
-		}
-		
-		public User() {
-			super();
-		}
+    public User(int id, String login, String haslo, String imie, String nazwisko, int uprawnienia) {
+        super();
+        this.id = id;
+        this.login = login;
+        this.haslo = haslo;
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.uprawnienia = uprawnienia;
+    }
 
-		public int getId() {
-			return id;
-		}
+    public User(String login, String haslo) {
+        this.login = login;
+        this.haslo = haslo;
+    }
 
-		public void setId(int id) {
-			this.id = id;
-		}
+    public User(String login, String haslo, String imie, String nazwisko, boolean isAddingUser) {
+        this.login = login;
+        this.haslo = haslo;
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.isAddingUser = isAddingUser;
+    }
 
-		public String getLogin() {
-			return login;
-		}
+    public User() {
+        super();
+    }
 
-		public void setLogin(String login) {
-			this.login = login;
-		}
+    public int getId() {
+        return id;
+    }
 
-		public String getHaslo() {
-			return haslo;
-		}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-		public void setHaslo(String haslo) {
-			this.haslo = haslo;
-		}
+    public String getLogin() {
+        return login;
+    }
 
-		public String getImie() {
-			return imie;
-		}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-		public void setImie(String imie) {
-			this.imie = imie;
-		}
+    public String getHaslo() {
+        return haslo;
+    }
 
-		public String getNazwisko() {
-			return nazwisko;
-		}
+    public void setHaslo(String haslo) {
+        this.haslo = haslo;
+    }
 
-		public void setNazwisko(String nazwisko) {
-			this.nazwisko = nazwisko;
-		}
+    public String getImie() {
+        return imie;
+    }
 
-		public int getUprawnienia() {
-			return uprawnienia;
-		}
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
 
-		public void setUprawnienia(int uprawnienia) {
-			this.uprawnienia = uprawnienia;
-		}
+    public String getNazwisko() {
+        return nazwisko;
+    }
 
-		@Override
-		public String toString() {
-			return "User [id=" + id + ", login=" + login + ", haslo=" + haslo + ", imie=" + imie + ", nazwisko="
-					+ nazwisko + ", uprawnienia=" + uprawnienia + "]";
-		}
-	}
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
+
+    public int getUprawnienia() {
+        return uprawnienia;
+    }
+
+    public void setUprawnienia(int uprawnienia) {
+        this.uprawnienia = uprawnienia;
+    }
+
+    public void setAddingUser(boolean addingUser) {
+        isAddingUser = addingUser;
+    }
+
+    public boolean isAddingUser() {
+        return isAddingUser;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", login=" + login + ", haslo=" + haslo + ", imie=" + imie + ", nazwisko="
+                + nazwisko + ", uprawnienia=" + uprawnienia + "]";
+    }
+}
 
