@@ -14,9 +14,10 @@ public class ClientConnector extends Thread{
 
     public ClientConnector(ServerSocket serverSocket) throws IOException {
         socket = serverSocket.accept();
-
+        System.out.println("1");
         objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         objectInputStream = new ObjectInputStream(socket.getInputStream());
+        System.out.println("2");
     }
     public void sendObject(Object object) throws IOException {
         objectOutputStream.writeObject(object);

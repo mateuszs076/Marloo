@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-import com.sun.prism.paint.Color;
-
-import Data.PopUps;
-import Data.Tabele;
+import Communication.Data.PopUps;
+import Communication.Data.Tabele;
+import Communication.Data.User;
+import application.connections.ServerConnector;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,14 +28,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
-public class MainWindow implements Serializable{
-	
-	
-	public static void mainWindow(Stage primaryStage, BorderPane root, int i) {
+public class MainWindow {
+
+	private ServerConnector serverConnector;
+
+	public MainWindow(ServerConnector serverConnector) {
+		this.serverConnector = serverConnector;
+	}
+
+	public void mainWindow(Stage primaryStage, BorderPane root, User user) {
 		root.getChildren().clear();
 		
 		VBox vb=new VBox();
@@ -53,14 +56,14 @@ public class MainWindow implements Serializable{
         vbox.resize(1200, 600);
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(Tabele.zawartosc());
+        vbox.getChildren().addAll(Tabele.zawartosc(serverConnector));
         
 		
 		MenuItem menuItem1 = new MenuItem("Przegl¹daj zawartoœæ");
 			menuItem1.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
-	            	vbox.getChildren().add(Tabele.zawartosc());
+	            	vbox.getChildren().add(Tabele.zawartosc(serverConnector));
 	            }
 	        });
 		MenuItem menuItem2 = new MenuItem("Dodaj do magazynu");
@@ -116,17 +119,22 @@ public class MainWindow implements Serializable{
 			menuItem10.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
-	            	vbox.getChildren().add(Tabele.pracownicy());
+	            	vbox.getChildren().add(Tabele.pracownicy(serverConnector));
 	            }
 	        });
 		MenuItem menuItem11 = new MenuItem("Wyœwietl Informcje");
 		
 		MenuItem menuItem12 = new MenuItem("Wyœwietl Informcje");
-		MenuItem menuItem13 = new MenuItem("Wyloguj");		
+		MenuItem menuItem13 = new MenuItem("Wyloguj");	
+		menuItem13.setOnAction(e -> {
+			new LoginWindow().login(primaryStage, root, serverConnector);
+		});
 		
 		MenuItem menuItem14 = new MenuItem("Dodaj/ Usuñ u¿ytkownika");
 		MenuItem menuItem15 = new MenuItem("Nadaj uprawnienia");
-		
+		menuItem15.setOnAction(e -> {
+			PopUps.nadajuprawnienia(primaryStage, serverConnector);
+		});
 		menuFile.getItems().add(menuItem1);
 		menuFile.getItems().add(menuItem2);
 		menuFile.getItems().add(menuItem3);
@@ -157,28 +165,28 @@ public class MainWindow implements Serializable{
 		menuBar.resize(1250,0);
 		vb.getChildren().addAll(menuBar);
 		Text oo;
-		switch(i)
+		switch(user.getUprawnienia())
 		{
-		case 1:
-			oo=new Text("Zalogowano jako ADMINISTATOR");
+		case 0:
+			oo=new Text("Zalogowano jako ADMINISTATOR: "+user.getImie()+" "+user.getNazwisko());
 		break;
-		case 2:
-			oo=new Text("Zalogowano jako: KIEROWNIK");			
+		case 1:
+			oo=new Text("Zalogowano jako: KIEROWNIK: "+user.getImie()+" "+user.getNazwisko());
 		break;	
-		case 3:oo=new Text("Zalogowano jako: PRACOWNIK MAGAZYNU");
+		case 2:oo=new Text("Zalogowano jako: PRACOWNIK MAGAZYNU: "+user.getImie()+" "+user.getNazwisko());
 			menuItem17.setDisable(true);
 			menuItem18.setDisable(true);
 			menuItem14.setDisable(true);
 			menuItem15.setDisable(true);
 		break;
-		case 4:oo=new Text("Zalogowano jako: STARSZY PRACOWNIK");
+		case 3:oo=new Text("Zalogowano jako: STARSZY PRACOWNIK: "+user.getImie()+" "+user.getNazwisko());
 		menuItem2.setDisable(true);
 		menuItem3.setDisable(true);
 		menuItem7.setDisable(true);
 		menuItem14.setDisable(true);
 		menuItem15.setDisable(true);
 		break;
-		case 5:oo=new Text("Zalogowano jako: M£ODSZY PRACOWNIK");
+		case 4:oo=new Text("Zalogowano jako: M£ODSZY PRACOWNIK: "+user.getImie()+" "+user.getNazwisko());
 		menuItem17.setDisable(true);
 		menuItem14.setDisable(true);
 		menuItem15.setDisable(true);
@@ -189,7 +197,7 @@ public class MainWindow implements Serializable{
 		menuItem5.setDisable(true);
 		menuItem9.setDisable(true);		
 		break;
-		case 6:oo=new Text("Zalogowano jako: STA¯YSTA");
+		case 5:oo=new Text("Zalogowano jako: STA¯YSTA: "+user.getImie()+" "+user.getNazwisko());
 		menuItem17.setDisable(true);
 		menuItem18.setDisable(true);
 		menuItem14.setDisable(true);
@@ -201,7 +209,7 @@ public class MainWindow implements Serializable{
 		menuItem5.setDisable(true);
 		menuItem9.setDisable(true);		
 		break;
-		default:oo=new Text("Zalogowano jako: UNDEFINED");
+		default:oo=new Text("Zalogowano jako: UNDEFINED: "+user.getImie()+" "+user.getNazwisko());
 		}
 		oo.setStyle("-fx-font-size: 15pt;");
 		oo.setFill(javafx.scene.paint.Color.NAVY);
@@ -209,4 +217,5 @@ public class MainWindow implements Serializable{
 		root.getChildren().add(vb);
 		root.getChildren().add(vbox);
 	}
+	
 }

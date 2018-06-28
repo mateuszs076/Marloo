@@ -24,6 +24,8 @@ public class User implements Serializable{
 			super();
 		}
 
+		
+		
 		public int getId() {
 			return id;
 		}

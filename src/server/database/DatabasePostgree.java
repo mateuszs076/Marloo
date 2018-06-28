@@ -2,9 +2,13 @@ package server.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
+
+import Communication.Data.Produkt;
 
 public class DatabasePostgree {
 
@@ -16,17 +20,26 @@ public class DatabasePostgree {
     }
 
     public Connection polacz() {
-        Properties p = new Properties();
-        p.put("user", "postgres");
-        p.put("password", "postgres");
-        try {
-            Class.forName("org.postgresql.Driver");
-            con = DriverManager.getConnection(address + "/postgres", p);
-            System.out.println("Polaczono z baza Postrge");
-        } catch (Exception e) {
-
-        }
-        return con;
+    	 Properties p = new Properties();
+         p.put("user", "postgres");
+         p.put("password", "postgres");
+         try {
+             Class.forName("org.postgresql.Driver");
+             con = DriverManager.getConnection(address+"/serwer", p);
+             System.out.println("Polaczono z baza Postrge");
+         } catch (Exception e) {
+             try {
+                 System.out.println(e);
+                 con = DriverManager.getConnection(address+"/postgres", p);
+                 Statement statement = con.createStatement();
+                 statement.execute("CREATE DATABASE serwer");
+                 con.close();
+                 con = DriverManager.getConnection(address+"/serwer", p);
+             } catch (SQLException ex) {
+                 //Logger.getLogger(DatabasePostgree.class.getName()).log(Level.SEVERE, null, ex);
+             }
+         }
+         return con;
     }
 
     public void init() {
@@ -71,9 +84,28 @@ public class DatabasePostgree {
 	        System.out.println(a.toString());*/
 //        return a;
 //    }
+    
+    public ArrayList<Produkt> readProdukty()
+    {
+	System.out.println("DatabasePosgre - > readProdukty NIE DZIAŁA!");
+       ArrayList<Produkt> a = new ArrayList<Produkt>();
+       try {
+            Statement st = con.createStatement();
+            
+            ResultSet r = st.executeQuery("SELECT * FROM Produkty");
+            while(r.next())
+            {
+                a.add(new Produkt(r.getString("index"), r.getString("nazwa"), r.getString("jm"), r.getDouble("ilosc")));
+            }
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        System.out.println(a.toString());
+        return a;
+    }
 
     public void maininit() {
-    	 System.out.println("maininit DatabasePostgree");
         polacz();
         init();
         init2();

@@ -1,18 +1,20 @@
 package server.threads;
 
-import Communication.Communication;
-import Communication.Data.User;
-import server.connectors.ClientConnector;
-import server.database.DatabsaeMySQL;
+import static Communication.Communication.UNAUTHORIZED_LOGIN;
 
 import java.io.IOException;
 import java.net.SocketException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static Communication.Communication.AUTHORIZED_LOGIN;
-import static Communication.Communication.UNAUTHORIZED_LOGIN;
+import Communication.Communication;
+import Communication.Data.Produkt;
+import Communication.Data.User;
+import server.connectors.ClientConnector;
+import server.database.DatabasePostgree;
+import server.database.DatabsaeMySQL;
 
 public class ConnectionListenerThread implements Runnable {
 
@@ -31,25 +33,63 @@ public class ConnectionListenerThread implements Runnable {
         while (true) {
             try {
                 obj = cc.receiveObject();
-                if(obj != null) {
+                if (obj != null) {
                     System.out.println("najs!");
                 }
                 if (obj instanceof User) {
-                	 System.out.println("got action1");
-                    try {
-                    	 System.out.println("got action1.1");
-                        User user = DatabsaeMySQL.getInstance().login(((User) obj).getLogin(), ((User) obj).getHaslo());
-                        if (user != null) {
-                            cc.sendObject((User) user);
-                            System.out.println("tak!");
-                        } else {
-                            cc.sendObject(UNAUTHORIZED_LOGIN);
-                            System.out.println("nie1");
+                    if (!(((User) obj).isAddingUser())) {
+                        System.out.println("got action1");
+                        try {
+                            User user = DatabsaeMySQL.getInstance().login(((User) obj).getLogin(), ((User) obj).getHaslo());
+                            if (user != null) {
+                                cc.sendObject((User) user);
+                                System.out.println("tak!");
+                            } else {
+                                cc.sendObject(UNAUTHORIZED_LOGIN);
+                                System.out.println("nie1");
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+//                        cc.closeSocket();
+                    } else {
+                    	DatabsaeMySQL.getInstance().rmvUser(((User) obj).getId());
+                        DatabsaeMySQL.getInstance().addUser(
+                                ((User) obj).getImie(),
+                                ((User) obj).getNazwisko(),
+                                ((User) obj).getLogin(),
+                                ((User) obj).getHaslo(),
+                                ((User) obj).getUprawnienia());
+
+                        System.out.println("Adding user server side");
                     }
-                    cc.closeSocket();
+                }
+                if (obj instanceof String) {
+                    if (obj.equals("getprodukty")) {
+                        System.out.println("pobieram produkty");
+                        ArrayList<Produkt> produkty=DatabasePostgree.getInstance().readProdukty();
+                            if (produkty != null) {
+                                cc.sendObject((ArrayList<Produkt>) produkty);
+                                System.out.println("tak!");
+                            } else {
+                                cc.sendObject(Communication.GET_PRODUKTY_FAILD);
+                                System.out.println("nie1");
+                            }
+                    } 
+                    if (obj.equals("getuserzy")) {
+                        System.out.println("pobieram userow");
+                        ArrayList<User> userzy=DatabsaeMySQL.getInstance().pobierzUserow();
+                            if (userzy != null) {
+                                cc.sendObject((ArrayList<User>) userzy);
+                                System.out.println("tak!");
+                            } else {
+                                cc.sendObject(Communication.GET_PRODUKTY_FAILD);
+                                System.out.println("nie1");
+                            }
+                    } else {
+                       
+                        System.out.println("Wrong");
+                    }
                 }
 
             } catch (SocketException se) {

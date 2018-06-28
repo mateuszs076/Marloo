@@ -14,7 +14,7 @@ public class StronaSerwera {
     }
 
     public static void okno(Stage primaryStage, BorderPane root) {
-        Text des = new Text("Przed uruchomieniem serwera proszÄ™ uruchomiÄ‡ program XAMPP");
+    	Text des = new Text("Przed uruchomieniem serwera proszê uruchomiæ program XAMPP");
         des.setTextAlignment(TextAlignment.JUSTIFY);
         des.setLayoutX(200);
         des.setLayoutY(100);
@@ -54,8 +54,8 @@ public class StronaSerwera {
 
         initialize_database.setOnMousePressed(me -> {
             initialize_database.setDisable(true);
-            new Thread(() -> DatabasePostgree.getInstance().maininit()).start();
-            new Thread(() -> DatabsaeMySQL.getInstance().initDB()).start();
+           DatabasePostgree.getInstance().maininit();
+           DatabsaeMySQL.getInstance().initDB();
         });
 
         Button run_server = new Button("Run Server");

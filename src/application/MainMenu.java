@@ -1,5 +1,6 @@
 package application;
 
+import application.connections.ServerConnector;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ import javafx.util.Duration;
 
 public class MainMenu {
 
-	public static void menu(Scene scene)
+	public static void menu(Scene scene, ServerConnector serverConnector)
 	{
 		BorderPane root=(BorderPane) scene.getRoot();
 		root.getChildren().clear();
@@ -28,21 +29,21 @@ public class MainMenu {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 		
-		ImageView logo=new ImageView(new Image("title.png"));
+		ImageView logo=new ImageView(new Image("img/title.png"));
 		logo.setFitWidth(700);
 		logo.setFitHeight(130);
 		logo.setLayoutX(250);
 		logo.setLayoutY(235);
 		logo.setOpacity(1);
 		
-		ImageView solutions=new ImageView(new Image("solutions.png"));
+		ImageView solutions=new ImageView(new Image("img/solutions.png"));
 		solutions.setFitWidth(400);
 		solutions.setFitHeight(50);
 		solutions.setLayoutX(250);
 		solutions.setLayoutY(200);
 		solutions.setOpacity(1);
 		
-		ImageView andyou=new ImageView(new Image("andyou.png"));
+		ImageView andyou=new ImageView(new Image("img/andyou.png"));
 		andyou.setFitWidth(350);
 		andyou.setFitHeight(50);
 		andyou.setLayoutX(600);
@@ -74,7 +75,7 @@ public class MainMenu {
 		});
 		enter.setOnMousePressed(new EventHandler<MouseEvent>() {
 		    public void handle(MouseEvent me) {
-			      LoginWindow.login(primaryStage, root);
+			      new LoginWindow().login(primaryStage, root, serverConnector);
 			    }
 		});
 		

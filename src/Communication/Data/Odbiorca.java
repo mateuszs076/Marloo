@@ -2,18 +2,19 @@ package Communication.Data;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Odbiorca implements Serializable{
 	
-	private String nazwa;
-	private String kraj;
-	private String Miasto;
-	private String adres;
+	String nazwa;
+	String kraj;
+	String miasto;
+	String adres;
 	
 	public Odbiorca(String nazwa, String kraj, String miasto, String adres) {
 		super();
 		this.nazwa = nazwa;
 		this.kraj = kraj;
-		Miasto = miasto;
+		this.miasto = miasto;
 		this.adres = adres;
 	}
 
@@ -34,11 +35,11 @@ public class Odbiorca implements Serializable{
 	}
 
 	public String getMiasto() {
-		return Miasto;
+		return miasto;
 	}
 
 	public void setMiasto(String miasto) {
-		Miasto = miasto;
+		this.miasto = miasto;
 	}
 
 	public String getAdres() {

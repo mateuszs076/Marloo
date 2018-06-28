@@ -212,20 +212,20 @@ public class DatabsaeMySQL implements Serializable{
 		}
 	}
 
-	/*public static void addUser(User u)
+	public static void addUser(User u)
 	{
 		try {
 			Statement st = createStatement(con);
 			ResultSet r = executeQuery(st, "Select MAX(id) from uzytkownicy_;");
 			r.next();
 			int id = ((int)r.getObject(1)+1);
-			executeUpdate(st, "INSERT INTO users VALUES("+id+", '"+u.getLogin()+"', '"+u.getPassword()+"', '"+u.getName()+"', '"+u.getSurname()+","+u.getLevel()+");");
+			executeUpdate(st, "INSERT INTO uzytkownicy_ VALUES("+id+", '"+u.getLogin()+"', '"+u.getHaslo()+"', '"+u.getImie()+"', '"+u.getNazwisko()+","+u.getUprawnienia()+");");
 			st.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}*/
+	}
 	public static int login(String login, String pass) throws SQLException
 	{
 		

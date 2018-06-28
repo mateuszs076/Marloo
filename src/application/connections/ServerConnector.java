@@ -36,6 +36,7 @@ public class ServerConnector extends Thread {
     }
 
     public Object receiveObject() throws IOException, ClassNotFoundException {
+    	System.out.println("recive object..");
         return objectInputStream.readObject();
     }
 

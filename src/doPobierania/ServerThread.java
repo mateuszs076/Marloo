@@ -14,7 +14,6 @@ import Data.User;
 import database.DatabasePostgree;
 import database.DatabsaeMySQL;
 
-
 public class ServerThread extends Thread {
 	Socket mySocket;
 
@@ -31,9 +30,8 @@ public class ServerThread extends Thread {
 
 	public void run() {
 		try {
-			
 
-			System.out.println("dzialam na potrzeby server thread dla "+this.getName().toString());
+			System.out.println("dzialam na potrzeby server thread dla " + this.getName().toString());
 			if (mySocket.getLocalPort() == 1003) {
 				BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
 				String str = in.readLine();
@@ -43,43 +41,43 @@ public class ServerThread extends Thread {
 				ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
 				if (data[0].equals("login")) {
 					System.out.println("Login");
-					DatabsaeMySQL.login(data[1], data[2]);					
+					DatabsaeMySQL.login(data[1], data[2]);
 				}
 				if (data[0].equals("userzy")) {
 					System.out.println("Userzy");
 					objOutputStream.writeObject(DatabsaeMySQL.pobierzUserow());
-					objOutputStream.flush();			
+					objOutputStream.flush();
 				}
 				if (data[0].equals("produkty")) {
 					System.out.println("produkty");
 					objOutputStream.writeObject(DatabasePostgree.readProdukty());
-					objOutputStream.flush();			
+					objOutputStream.flush();
 				}
 				if (data[0].equals("odbiorcy")) {
 					System.out.println("odbiorcy");
 					objOutputStream.writeObject(DatabsaeMySQL.pobierzOdbiorcow());
-					objOutputStream.flush();			
+					objOutputStream.flush();
 				}
 				if (data[0].equals("maszyny")) {
 					System.out.println("maszyny");
 					objOutputStream.writeObject(DatabasePostgree.readMaszyna());
-					objOutputStream.flush();			
+					objOutputStream.flush();
 				}
 				System.out.println("Zakończono połączenie z" + mySocket.getInetAddress());
-			} else if(mySocket.getLocalPort() == 1004)
-			{
+			} else if (mySocket.getLocalPort() == 1004) {
 				/*
-				mySocket.setTcpNoDelay(true);
-				System.out.println("Rozpoczynam tworzenie u¿ytkownika");
-				InputStream inputStream = mySocket.getInputStream();
-				ObjectInputStream objInputStream = null;
-				objInputStream = new ObjectInputStream(inputStream);
-	            User p = (User) objInputStream.readObject();
-	            PrintWriter out = new PrintWriter(new OutputStreamWriter(mySocket.getOutputStream()));
-				String str = ""+JDBC.addUser(p.getLogin(), p.getName(), p.getEmail(), p.getPassword(), p.getSex(), p.getType());
-				out.println(str);
-				out.flush();
-				System.out.println("Koñczê resjestracje");*/
+				 * mySocket.setTcpNoDelay(true);
+				 * System.out.println("Rozpoczynam tworzenie u¿ytkownika");
+				 * InputStream inputStream = mySocket.getInputStream();
+				 * ObjectInputStream objInputStream = null; objInputStream = new
+				 * ObjectInputStream(inputStream); User p = (User)
+				 * objInputStream.readObject(); PrintWriter out = new
+				 * PrintWriter(new
+				 * OutputStreamWriter(mySocket.getOutputStream())); String str =
+				 * ""+JDBC.addUser(p.getLogin(), p.getName(), p.getEmail(),
+				 * p.getPassword(), p.getSex(), p.getType()); out.println(str);
+				 * out.flush(); System.out.println("Koñczê resjestracje");
+				 */
 			}
 			mySocket.close();
 		} catch (Exception e) {

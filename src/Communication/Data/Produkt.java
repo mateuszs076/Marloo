@@ -4,15 +4,10 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Produkt implements Serializable{
-	@Override
-	public String toString() {
-		return "Produkt index=" + index + ", nazwa=" + nazwa + ", jednostka=" + jednostka;
-	}
-
-	private String index;
-	private String nazwa;
-	private String jednostka;
-	private double ilosc;
+	String index;
+	String nazwa;
+	String jednostka;
+	double ilosc;
 	
 	public String getIndex() {
 		return index;
@@ -52,6 +47,11 @@ public class Produkt implements Serializable{
 		this.nazwa = nazwa;
 		this.jednostka = jednostka;
 		this.ilosc = ilosc;
+	}
+
+	@Override
+	public String toString() {
+		return "Produkt index=" + index + ", nazwa=" + nazwa + ", jednostka=" + jednostka;
 	}
 	
 	

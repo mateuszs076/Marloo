@@ -1,18 +1,28 @@
 package Communication.Data;
 
+import java.util.ArrayList;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
+import java.io.IOException;
+import java.lang.Integer;
+
+import application.LoginWindow;
+import application.connections.ServerConnector;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
 
 public class PopUps {
 	static Pattern validEditingState = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
@@ -52,16 +62,9 @@ public class PopUps {
 	{
 		Label header=new Label("DODAWANIE DO MAGAZYNU");
 		header.setAlignment(Pos.CENTER);
+	
 		
-		Label h1=new Label("WYBIERZ Z DOSTEPNYCH:");
-		h1.setLayoutX(25);
-		h1.setPadding(Insets.EMPTY);
-		
-		ChoiceBox index = new ChoiceBox(FXCollections.observableArrayList());
-		index.setPrefWidth(450);
-		index.setLayoutX(25);
-		
-		Label h2=new Label("LUB PODAJ NOWE DANE:");
+		Label h2=new Label("PODAJ NOWE DANE:");
 		h2.setLayoutX(25);
 		
 		TextField ind=new TextField();
@@ -87,7 +90,7 @@ public class PopUps {
 		
 		TextField ilosc=new TextField();		
 		ilosc.setTextFormatter(textFormatter);
-		ilosc.setPromptText("ILOSC");
+		ilosc.setPromptText("ILOŒÆ");
 		ilosc.setLayoutX(250);
 		
 		Button potwierdz=new Button("Potwierdz");
@@ -110,22 +113,25 @@ public class PopUps {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
         VBox dialogVbox = new VBox(30);
-        dialogVbox.getChildren().addAll(header, h1, index, h2,  hb1, hb2, potwierdz);
-        Scene dialogScene = new Scene(dialogVbox, 500, 500) ;
+        dialogVbox.getChildren().addAll(header,  h2,  hb1, hb2, potwierdz);
+        Scene dialogScene = new Scene(dialogVbox, 500, 400) ;
         dialog.setScene(dialogScene);
         dialog.show();
 	}
 	
 	public static void wydajNaProdukcje(Stage primaryStage)
 	{
-		Label header=new Label("Wydawanie na Produkcja");
+		Label header=new Label("Wydawanie na Produkcjê");
 		header.setAlignment(Pos.CENTER);
 		
-		Label h1=new Label("WYBIERZ Z DOSTEPNYCH:");
+		Label h1=new Label("WYBIERZ Z DOSTÊPNYCH:");
 		h1.setLayoutX(25);
 		h1.setPadding(Insets.EMPTY);
 		
-		ChoiceBox index = new ChoiceBox(FXCollections.observableArrayList("TUTAJ", "BEDA", "DANE", "Z", "BAZY"));
+		ArrayList<Produkt> p=new ArrayList<Produkt>();
+		//p=Tabele.getProdukty();
+		
+		ChoiceBox index = new ChoiceBox(FXCollections.observableArrayList(p));
 		index.setPrefWidth(450);
 		index.setLayoutX(25);
 		
@@ -135,7 +141,7 @@ public class PopUps {
 		
 		TextField ilosc=new TextField();		
 		ilosc.setTextFormatter(textFormatter);
-		ilosc.setPromptText("ILOSC");
+		ilosc.setPromptText("ILOŒÆ");
 		ilosc.setLayoutX(25);
 		
 		Button potwierdz=new Button("Wydaj");
@@ -168,7 +174,7 @@ public class PopUps {
 		
 		TextField ilosc=new TextField();		
 		ilosc.setTextFormatter(textFormatter);
-		ilosc.setPromptText("ILOSC");
+		ilosc.setPromptText("ILOŒÆ");
 		ilosc.setLayoutX(25);
 		
 		Button potwierdz=new Button("Dodaj");
@@ -180,6 +186,82 @@ public class PopUps {
         VBox dialogVbox = new VBox(20);
         dialogVbox.getChildren().addAll(header, nazwa, jj2, ilosc, potwierdz);
         Scene dialogScene = new Scene(dialogVbox, 300, 200) ;
+        dialog.setScene(dialogScene);
+        dialog.show();
+	}
+	public static void nadajuprawnienia(Stage primaryStage, ServerConnector sv)
+	{
+		Label header=new Label("Nadawanie uprawnieñ");
+		header.setAlignment(Pos.CENTER);
+		
+		Label h1=new Label("WYBIERZ Z DOSTÊPNYCH:");
+		h1.setLayoutX(25);
+		h1.setPadding(Insets.EMPTY);
+		
+		final ArrayList<User> p=Tabele.getUserzy(sv);
+		
+		
+		ChoiceBox index = new ChoiceBox(FXCollections.observableArrayList(p));
+		index.setPrefWidth(450);
+		index.setLayoutX(25);
+		
+	
+
+		ChoiceBox jm = new ChoiceBox(FXCollections.observableArrayList("Administrator","Kierownik","Pracownik Magazynu","Starszy Pracownik","M³odszy Pracownik","Sta¿ysta"));
+		jm.setPrefWidth(200);
+		jm.setLayoutX(25);
+		
+		
+		
+		
+		
+		Button potwierdz=new Button("Zmieñ");
+		potwierdz.setLayoutX(25);
+		potwierdz.setOnAction(e -> {
+			Integer a;
+			a=Integer.parseInt(index.getValue().toString().substring(0, 1));
+			User u=p.get(a-1);
+			if(jm.getValue().toString().equals("Administrator"))
+			{
+				u.setUprawnienia(0);
+			}
+			if(jm.getValue().toString().equals("Kierownik"))
+			{
+				u.setUprawnienia(1);
+			}
+			if(jm.getValue().toString().equals("Pracownik Magazynu"))
+			{
+				u.setUprawnienia(2);
+			}
+			if(jm.getValue().toString().equals("Starszy Pracownik"))
+			{
+				u.setUprawnienia(3);
+			}
+			if(jm.getValue().toString().equals("M³odszy Pracownik"))
+			{
+				u.setUprawnienia(4);
+			}
+			if(jm.getValue().toString().equals("Sta¿ysta"))
+			{
+				u.setUprawnienia(5);
+			}
+			u.setAddingUser(true);
+			try {
+                sv.sendObject(u);
+
+            } catch (IOException ee) {
+                ee.printStackTrace();
+            }
+		});
+		
+		//Produkt p=new Produkt(ind.getText(), nazwa.getText(), jm.getText(), ilosc.getText());
+			
+		final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().addAll(header, h1, index, jm, potwierdz);
+        Scene dialogScene = new Scene(dialogVbox, 400, 250) ;
         dialog.setScene(dialogScene);
         dialog.show();
 	}
