@@ -64,6 +64,14 @@ public class ConnectionListenerThread implements Runnable {
                         System.out.println("Adding user server side");
                     }
                 }
+                if (obj instanceof Produkt) {
+                    
+                    
+                    System.out.println("Dodaje do magazynu");
+                   DatabasePostgree.getInstance().addProduct(((Produkt) obj));
+                        
+                }
+
                 if (obj instanceof String) {
                     if (obj.equals("getprodukty")) {
                         System.out.println("pobieram produkty");
@@ -86,12 +94,32 @@ public class ConnectionListenerThread implements Runnable {
                                 cc.sendObject(Communication.GET_PRODUKTY_FAILD);
                                 System.out.println("nie1");
                             }
-                    } else {
+                    } 
+                    if (((String) obj).substring(0, 1).equals("p")) {
+                        System.out.println("wydaje na magazyn");
+                        ArrayList<Produkt> produkty=DatabasePostgree.getInstance().readProdukty();
+                        String tekst=(String) obj;
+                        //int dlugoscdoubla=tekst.length()-2;
+                        System.out.println(tekst);
+                        double ilosc=Double.parseDouble(tekst.substring(2, tekst.length()));
+                        System.out.println("Ilosc:"+ilosc);
+                        for(int i=0; i<produkty.size(); i++)
+                        {
+                        	System.out.println("ID:"+((String) obj).substring(1, 2));
+                        	if(Integer.parseInt(((String) obj).substring(1, 2))==(produkty.get(i).getId()))
+                        	{
+                        		produkty.get(i).setIlosc(produkty.get(i).getIlosc()-ilosc);
+                        		System.out.println(produkty.get(i).getIlosc());
+                        		DatabasePostgree.getInstance().uptadeProduct(produkty.get(i));
+                        	}
+                        }
+                    } 
+                    else {
                        
                         System.out.println("Wrong");
                     }
                 }
-
+               
             } catch (SocketException se) {
                 cc.closeSocket();
             } catch (ClassNotFoundException | IOException e) {

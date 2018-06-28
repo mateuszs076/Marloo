@@ -4,11 +4,34 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Produkt implements Serializable{
+	int id;
 	String index;
 	String nazwa;
 	String jednostka;
 	double ilosc;
 	
+	
+	public Produkt(int id, String index, String nazwa, String jednostka, double ilosc) {
+		super();
+		this.id = id;
+		this.index = index;
+		this.nazwa = nazwa;
+		this.jednostka = jednostka;
+		this.ilosc = ilosc;
+	}
+
+	
+	
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getIndex() {
 		return index;
 	}
@@ -51,8 +74,11 @@ public class Produkt implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Produkt index=" + index + ", nazwa=" + nazwa + ", jednostka=" + jednostka;
+		return id + " " + index + " " + nazwa + " =" + jednostka + " "
+				+ ilosc;
 	}
+	
+	
 	
 	
 }

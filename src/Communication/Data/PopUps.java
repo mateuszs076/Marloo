@@ -1,15 +1,14 @@
 package Communication.Data;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
-import java.io.IOException;
-import java.lang.Integer;
 
-import application.LoginWindow;
+import application.MainWindow;
 import application.connections.ServerConnector;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,6 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -58,7 +58,7 @@ public class PopUps {
 	
 	
 	
-	public static void dodajDoMag(Stage primaryStage)
+	public static void dodajDoMag(Stage primaryStage, ServerConnector serverConnector)
 	{
 		Label header=new Label("DODAWANIE DO MAGAZYNU");
 		header.setAlignment(Pos.CENTER);
@@ -93,8 +93,9 @@ public class PopUps {
 		ilosc.setPromptText("ILOŒÆ");
 		ilosc.setLayoutX(250);
 		
-		Button potwierdz=new Button("Potwierdz");
+		Button potwierdz=new Button("Dodaj do magazynu");
 		potwierdz.setLayoutX(25);
+		
 		
 		HBox hb1=new HBox(20);
 		hb1.getChildren().addAll(ind, nazwa);
@@ -107,7 +108,20 @@ public class PopUps {
 
 		HBox hb2=new HBox(20);
 		hb2.getChildren().addAll(jedm, iloo);
-		//Produkt p=new Produkt(ind.getText(), nazwa.getText(), jm.getText(), ilosc.getText());
+
+		 potwierdz.setOnMousePressed(new EventHandler<MouseEvent>() {
+	            public void handle(MouseEvent me) {
+	            	 try {
+	            		 	System.out.println("wysylam produkt");
+	            			Produkt p=new Produkt(ind.getText(), nazwa.getText(), jm.getValue().toString(), Double.parseDouble(ilosc.getText()));
+	            			serverConnector.sendObject(p);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            }
+	        });
+		
 			
 		final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -117,9 +131,11 @@ public class PopUps {
         Scene dialogScene = new Scene(dialogVbox, 500, 400) ;
         dialog.setScene(dialogScene);
         dialog.show();
+        
+       
 	}
 	
-	public static void wydajNaProdukcje(Stage primaryStage)
+	public static void wydajNaProdukcje(Stage primaryStage, ServerConnector sv)
 	{
 		Label header=new Label("Wydawanie na Produkcjê");
 		header.setAlignment(Pos.CENTER);
@@ -128,8 +144,8 @@ public class PopUps {
 		h1.setLayoutX(25);
 		h1.setPadding(Insets.EMPTY);
 		
-		ArrayList<Produkt> p=new ArrayList<Produkt>();
-		//p=Tabele.getProdukty();
+		ArrayList<Produkt> p=Tabele.getProdukty(sv);
+		
 		
 		ChoiceBox index = new ChoiceBox(FXCollections.observableArrayList(p));
 		index.setPrefWidth(450);
@@ -148,7 +164,7 @@ public class PopUps {
 		potwierdz.setLayoutX(25);
 		
 		
-		//Produkt p=new Produkt(ind.getText(), nazwa.getText(), jm.getText(), ilosc.getText());
+		
 			
 		final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -158,6 +174,21 @@ public class PopUps {
         Scene dialogScene = new Scene(dialogVbox, 400, 250) ;
         dialog.setScene(dialogScene);
         dialog.show();
+        
+        potwierdz.setOnMousePressed(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent me) {
+            	 try {
+            		 	System.out.println("wydaje produkt");
+            			
+            			sv.sendObject(new String("p"+index.getValue().toString().substring(0, 1)+Double.parseDouble(ilosc.getText())));
+            			dialog.close();
+            			
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
 	}
 	public static void dodajMaszyne(Stage primaryStage)
 	{

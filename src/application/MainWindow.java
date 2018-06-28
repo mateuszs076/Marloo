@@ -69,13 +69,13 @@ public class MainWindow {
 		MenuItem menuItem2 = new MenuItem("Dodaj do magazynu");
 			menuItem2.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
-	            	PopUps.dodajDoMag(primaryStage);
+	            	PopUps.dodajDoMag(primaryStage, serverConnector);
 	            }
 	        });
 		MenuItem menuItem3 = new MenuItem("Wydaj na produkcjê");
 			menuItem3.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
-	            	PopUps.wydajNaProdukcje(primaryStage);
+	            	PopUps.wydajNaProdukcje(primaryStage, serverConnector);
 	            }
 	        });
 		MenuItem menuItem4 = new MenuItem("Przygotuj wysy³kê");
