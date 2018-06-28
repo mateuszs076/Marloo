@@ -17,7 +17,7 @@ public class Laczezserverem implements Runnable{
 			e.printStackTrace();
 		}
 		if(socket.isConnected())
-			System.out.println("Uzyskano Po³¹czenie z "+sa);
+			System.out.println("Uzyskano PoÅ‚Ä…czenie z "+sa);
 			System.out.println("Zaraz zostanie uruchomiona aplikacja");
 			try {
 				Thread.sleep(1000);

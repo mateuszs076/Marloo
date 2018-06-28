@@ -44,11 +44,11 @@ public class MainWindow {
 		VBox vb=new VBox();
 		vb.resize(1250, 20);
 		MenuBar menuBar = new MenuBar();		
-		Menu menuFile = new Menu("ZawartoúÊ");
-		Menu menuEdit = new Menu("Wysy≥ki");
+		Menu menuFile = new Menu("Zawarto≈õƒá");
+		Menu menuEdit = new Menu("Wysy≈Çki");
 		Menu menuView = new Menu("Produkcja");
 		Menu menuWork = new Menu("Pracownicy");
-		Menu menuUser = new Menu("Uøytkownik");
+		Menu menuUser = new Menu("U≈ºytkownik");
 		Menu menuSet = new Menu("Ustawienia");
 		
 		final VBox vbox = new VBox();
@@ -59,7 +59,7 @@ public class MainWindow {
         vbox.getChildren().addAll(Tabele.zawartosc(serverConnector));
         
 		
-		MenuItem menuItem1 = new MenuItem("Przeglπdaj zawartoúÊ");
+		MenuItem menuItem1 = new MenuItem("PrzeglƒÖdaj zawarto≈õƒá");
 			menuItem1.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
@@ -72,32 +72,32 @@ public class MainWindow {
 	            	PopUps.dodajDoMag(primaryStage, serverConnector);
 	            }
 	        });
-		MenuItem menuItem3 = new MenuItem("Wydaj na produkcjÍ");
+		MenuItem menuItem3 = new MenuItem("Wydaj na produkcjƒô");
 			menuItem3.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	PopUps.wydajNaProdukcje(primaryStage, serverConnector);
 	            }
 	        });
-		MenuItem menuItem4 = new MenuItem("Przygotuj wysy≥kÍ");
-		MenuItem menuItem5 = new MenuItem("Wyúlij przygotowanπ");
-		MenuItem menuItem6 = new MenuItem("Przeglπdaj OdbiorcÛw");
+		MenuItem menuItem4 = new MenuItem("Przygotuj wysy≈Çkƒô");
+		MenuItem menuItem5 = new MenuItem("Wy≈õlij przygotowanƒÖ");
+		MenuItem menuItem6 = new MenuItem("PrzeglƒÖdaj Odbiorc√≥w");
 			menuItem6.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
 	            	vbox.getChildren().add(Tabele.odbiorcy());
 	            }
 	        });
-		MenuItem menuItem7 = new MenuItem("Dodaj/UsuÒ OdbiorcÛw");
+		MenuItem menuItem7 = new MenuItem("Dodaj/Usu≈Ñ Odbiorc√≥w");
 		
 		Menu menuItem8 = new Menu("Zaplecze techniczne");
-			MenuItem menuItem16 = new MenuItem("Przeglπdaj maszyny");
+			MenuItem menuItem16 = new MenuItem("PrzeglƒÖdaj maszyny");
 				menuItem16.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override public void handle(ActionEvent e) {
 		            	vbox.getChildren().clear();
 		            	vbox.getChildren().add(Tabele.maszyny());
 		            }
 		        });
-			MenuItem menuItem17 = new MenuItem("Dodaj maszynÍ");
+			MenuItem menuItem17 = new MenuItem("Dodaj maszynƒô");
 				menuItem17.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override public void handle(ActionEvent e) {
 		            	PopUps.dodajMaszyne(primaryStage);
@@ -115,22 +115,22 @@ public class MainWindow {
 	            }
 	        });
 		
-		MenuItem menuItem10 = new MenuItem("Wyúwietl listÍ pracownikÛw");
+		MenuItem menuItem10 = new MenuItem("Wy≈õwietl listƒô pracownik√≥w");
 			menuItem10.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override public void handle(ActionEvent e) {
 	            	vbox.getChildren().clear();
 	            	vbox.getChildren().add(Tabele.pracownicy(serverConnector));
 	            }
 	        });
-		MenuItem menuItem11 = new MenuItem("Wyúwietl Informcje");
+		MenuItem menuItem11 = new MenuItem("Wy≈õwietl Informcje");
 		
-		MenuItem menuItem12 = new MenuItem("Wyúwietl Informcje");
+		MenuItem menuItem12 = new MenuItem("Wy≈õwietl Informcje");
 		MenuItem menuItem13 = new MenuItem("Wyloguj");	
 		menuItem13.setOnAction(e -> {
 			new LoginWindow().login(primaryStage, root, serverConnector);
 		});
 		
-		MenuItem menuItem14 = new MenuItem("Dodaj/ UsuÒ uøytkownika");
+		MenuItem menuItem14 = new MenuItem("Dodaj/ Usu≈Ñ u≈ºytkownika");
 		MenuItem menuItem15 = new MenuItem("Nadaj uprawnienia");
 		menuItem15.setOnAction(e -> {
 			PopUps.nadajuprawnienia(primaryStage, serverConnector);
@@ -186,7 +186,7 @@ public class MainWindow {
 		menuItem14.setDisable(true);
 		menuItem15.setDisable(true);
 		break;
-		case 4:oo=new Text("Zalogowano jako: M£ODSZY PRACOWNIK: "+user.getImie()+" "+user.getNazwisko());
+		case 4:oo=new Text("Zalogowano jako: M≈ÅODSZY PRACOWNIK: "+user.getImie()+" "+user.getNazwisko());
 		menuItem17.setDisable(true);
 		menuItem14.setDisable(true);
 		menuItem15.setDisable(true);
@@ -197,7 +197,7 @@ public class MainWindow {
 		menuItem5.setDisable(true);
 		menuItem9.setDisable(true);		
 		break;
-		case 5:oo=new Text("Zalogowano jako: STAØYSTA: "+user.getImie()+" "+user.getNazwisko());
+		case 5:oo=new Text("Zalogowano jako: STAÔøΩYSTA: "+user.getImie()+" "+user.getNazwisko());
 		menuItem17.setDisable(true);
 		menuItem18.setDisable(true);
 		menuItem14.setDisable(true);

@@ -51,12 +51,12 @@ public class RegisterWindow {
         login.setLayoutY(200);
         login.setStyle("-fx-font-size: 20pt;");
         login.setFill(Color.NAVY);
-        Text haslo = new Text("Has≥o:");
+        Text haslo = new Text("Has≈Ço:");
         haslo.setLayoutX(20);
         haslo.setLayoutY(270);
         haslo.setStyle("-fx-font-size: 20pt;");
         haslo.setFill(Color.NAVY);
-        Text haslo2 = new Text("PowtÛrz has≥o:");
+        Text haslo2 = new Text("Powt√≥rz has≈Ço:");
         haslo2.setLayoutX(20);
         haslo2.setLayoutY(340);
         haslo2.setStyle("-fx-font-size: 20pt;");
