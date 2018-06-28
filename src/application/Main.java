@@ -1,7 +1,5 @@
 package application;
 
-import java.io.IOException;
-
 import application.connections.ServerConnector;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,7 +7,6 @@ import javafx.stage.StageStyle;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import server.Server;
 
 
 public class Main extends Application {
@@ -29,7 +26,6 @@ public class Main extends Application {
             scene.setFill(Color.TRANSPARENT);
             primaryStage.setScene(scene);
             new WelcomeClass(primaryStage, serverConnector).goodMorning(primaryStage);
-//            WelcomeClass.goodMorning(primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
         }

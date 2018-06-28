@@ -259,6 +259,29 @@ public class DatabsaeMySQL implements Serializable {
         return u;
     }
 
+    public ArrayList<User> getNonAdminUsers() {
+        Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
+        ArrayList<User> users = new ArrayList<>();
+
+        try {
+            Statement st = createStatement(con);
+            if (executeUpdate(st, "USE nowaBaza;") == 0)
+                System.out.println("Baza wybrana");
+            ResultSet r = executeQuery(st, "SELECT * FROM uzytkownicy_WHERE uprawnienia = '1';");
+            while (r.next())
+                users.add(new User(r.getInt("id"), r.getString("login"), r.getString("haslo"), r.getString("imie"),
+                        r.getString("nazwisko"), r.getInt("uprawnienia")));
+            st.close();
+
+        } catch (SQLException e) {
+            System.out.println("Nie mogłem pobrać userow, ponieważ:");
+            e.printStackTrace();
+        } finally {
+            return users;
+        }
+    }
+
+
     public ArrayList<User> pobierzUserow() {
         Connection con = getConnection("jdbc:mysql://", "localhost", 3306, "root", "");
         System.out.println("Pobieram Userow");

@@ -1,6 +1,8 @@
 package application;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
@@ -30,9 +32,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import static Communication.Communication.GET_WORKERS;
+
 public class MainWindow {
 
 	private ServerConnector serverConnector;
+	private User user;
 
 	public MainWindow(ServerConnector serverConnector) {
 		this.serverConnector = serverConnector;
@@ -115,14 +120,26 @@ public class MainWindow {
 	            }
 	        });
 		
-		MenuItem menuItem10 = new MenuItem("Wy�wietl list� pracownik�w");
-			menuItem10.setOnAction(new EventHandler<ActionEvent>() {
-	            @Override public void handle(ActionEvent e) {
-	            	vbox.getChildren().clear();
-	            	vbox.getChildren().add(Tabele.pracownicy());
-	            }
-	        });
-		MenuItem menuItem11 = new MenuItem("Wy�wietl Informcje");
+		MenuItem menuItem10 = new MenuItem("Wyświetl listę pracowników");
+			menuItem10.setOnAction(e -> {
+                vbox.getChildren().clear();
+                try {
+                    serverConnector.sendObject(GET_WORKERS);
+                    Object obj = serverConnector.receiveObject();
+
+                    if (obj instanceof ArrayList) {
+                        vbox.getChildren().add(Tabele.pracownicy((ArrayList<User>) obj));
+                        System.out.println("oksss");
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+
+//                vbox.getChildren().add(Tabele.pracownicy());
+            });
+		MenuItem menuItem11 = new MenuItem("Wyświetl Informcje");
 		
 		MenuItem menuItem12 = new MenuItem("Wy�wietl Informcje");
 		MenuItem menuItem13 = new MenuItem("Wyloguj");		
@@ -155,7 +172,10 @@ public class MainWindow {
 		menuSet.getItems().add(menuItem15);
 		
 		
-		
+		if (user.getUprawnienia() == 1) {
+		    menuWork.setVisible(false);
+		    menuSet.setVisible(false);
+        }
         
         
 		menuBar.getStyleClass().add("menu");

@@ -1,6 +1,7 @@
 package server.threads;
 
 import Communication.Communication;
+import Communication.Data.Tabele;
 import Communication.Data.User;
 import server.connectors.ClientConnector;
 import server.database.DatabsaeMySQL;
@@ -12,6 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static Communication.Communication.AUTHORIZED_LOGIN;
+import static Communication.Communication.GET_WORKERS;
 import static Communication.Communication.UNAUTHORIZED_LOGIN;
 
 public class ConnectionListenerThread implements Runnable {
@@ -59,6 +61,10 @@ public class ConnectionListenerThread implements Runnable {
 
                         System.out.println("Adding user server side");
                     }
+                }
+
+                if (obj == GET_WORKERS) {
+                    cc.sendObject(DatabsaeMySQL.getInstance().getNonAdminUsers());
                 }
 
             } catch (SocketException se) {
