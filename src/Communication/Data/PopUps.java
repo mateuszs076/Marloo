@@ -90,7 +90,7 @@ public class PopUps {
 		
 		TextField ilosc=new TextField();		
 		ilosc.setTextFormatter(textFormatter);
-		ilosc.setPromptText("ILOŒÆ");
+		ilosc.setPromptText("ILO??");
 		ilosc.setLayoutX(250);
 		
 		Button potwierdz=new Button("Dodaj do magazynu");
@@ -137,10 +137,10 @@ public class PopUps {
 	
 	public static void wydajNaProdukcje(Stage primaryStage, ServerConnector sv)
 	{
-		Label header=new Label("Wydawanie na Produkcjê");
+		Label header=new Label("Wydawanie na Produkcj?");
 		header.setAlignment(Pos.CENTER);
 		
-		Label h1=new Label("WYBIERZ Z DOSTÊPNYCH:");
+		Label h1=new Label("WYBIERZ Z DOST?PNYCH:");
 		h1.setLayoutX(25);
 		h1.setPadding(Insets.EMPTY);
 		
@@ -157,7 +157,7 @@ public class PopUps {
 		
 		TextField ilosc=new TextField();		
 		ilosc.setTextFormatter(textFormatter);
-		ilosc.setPromptText("ILOŒÆ");
+		ilosc.setPromptText("ILO??");
 		ilosc.setLayoutX(25);
 		
 		Button potwierdz=new Button("Wydaj");
@@ -205,7 +205,7 @@ public class PopUps {
 		
 		TextField ilosc=new TextField();		
 		ilosc.setTextFormatter(textFormatter);
-		ilosc.setPromptText("ILOŒÆ");
+		ilosc.setPromptText("ILO??");
 		ilosc.setLayoutX(25);
 		
 		Button potwierdz=new Button("Dodaj");
@@ -222,10 +222,10 @@ public class PopUps {
 	}
 	public static void nadajuprawnienia(Stage primaryStage, ServerConnector sv)
 	{
-		Label header=new Label("Nadawanie uprawnieñ");
+		Label header=new Label("Nadawanie uprawnie?");
 		header.setAlignment(Pos.CENTER);
 		
-		Label h1=new Label("WYBIERZ Z DOSTÊPNYCH:");
+		Label h1=new Label("WYBIERZ Z DOST?PNYCH:");
 		h1.setLayoutX(25);
 		h1.setPadding(Insets.EMPTY);
 		
@@ -238,7 +238,7 @@ public class PopUps {
 		
 	
 
-		ChoiceBox jm = new ChoiceBox(FXCollections.observableArrayList("Administrator","Kierownik","Pracownik Magazynu","Starszy Pracownik","M³odszy Pracownik","Sta¿ysta"));
+		ChoiceBox jm = new ChoiceBox(FXCollections.observableArrayList("Administrator","Kierownik","Pracownik Magazynu","Starszy Pracownik","M?odszy Pracownik","Sta?ysta"));
 		jm.setPrefWidth(200);
 		jm.setLayoutX(25);
 		
@@ -246,7 +246,7 @@ public class PopUps {
 		
 		
 		
-		Button potwierdz=new Button("Zmieñ");
+		Button potwierdz=new Button("Zmie?");
 		potwierdz.setLayoutX(25);
 		potwierdz.setOnAction(e -> {
 			Integer a;
@@ -268,11 +268,11 @@ public class PopUps {
 			{
 				u.setUprawnienia(3);
 			}
-			if(jm.getValue().toString().equals("M³odszy Pracownik"))
+			if(jm.getValue().toString().equals("M?odszy Pracownik"))
 			{
 				u.setUprawnienia(4);
 			}
-			if(jm.getValue().toString().equals("Sta¿ysta"))
+			if(jm.getValue().toString().equals("Sta?ysta"))
 			{
 				u.setUprawnienia(5);
 			}
